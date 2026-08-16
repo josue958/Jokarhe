@@ -22,88 +22,125 @@ const ExcelExport = (() => {
             const planeacion = plans[0];
             const pdas = dbQuery("SELECT * FROM planeacion_pdas WHERE planeacion_id = ? ORDER BY pda_number ASC", [planeacionId]);
 
-            // 2. Cargar plantilla Excel binaria
-            const response = await fetch('assets/template.xlsx');
-            if (!response.ok) {
-                throw new Error("No se pudo cargar la plantilla Excel de la carpeta assets.");
-            }
-            const arrayBuffer = await response.arrayBuffer();
-
+            // 2. Crear un nuevo libro Excel limpio y 100% compatible
             const workbook = new ExcelJS.Workbook();
-            await workbook.xlsx.load(arrayBuffer);
-            const ws = workbook.worksheets[0];
+            workbook.creator = 'Jokarhe Systems';
+            workbook.lastModifiedBy = 'Jokarhe Systems';
+            workbook.created = new Date();
+            workbook.modified = new Date();
 
-            // 3. Escribir Encabezados
-            const disciplinaStr = ` ${planeacion.disciplina.toUpperCase()}    ${planeacion.grado}º. GRADO         ${cycle.name.toUpperCase()}`;
-            ws.getCell('A2').value = disciplinaStr;
+            const ws = workbook.addWorksheet('Dosificación');
+            ws.views = [{ showGridLines: true }];
 
-            // 4. Limpiar datos de ejemplo del template
-            // Remove existing merges from row 4 onwards
-            const mergesToRemove = [];
-            for (const merge in ws._merges) {
-                const [start, end] = merge.split(':');
-                const startRow = parseInt(start.replace(/\D/g, ''));
-                if (startRow >= 6) {
-                    mergesToRemove.push(merge);
-                }
-            }
-            mergesToRemove.forEach(m => ws.unMergeCells(m));
+            // Configurar anchos de columna
+            ws.columns = [
+                { key: 'contenido', width: 28 },
+                { key: 'pda_no', width: 9 },
+                { key: 'pda', width: 46 },
+                { key: 'temas', width: 36 },
+                { key: 'sesiones', width: 12 },
+                { key: 'verbo', width: 16 },
+                { key: 'complejidad', width: 14 },
+                { key: 'rango', width: 18 },
+                { key: 'fecha_inicio', width: 15 },
+                { key: 'fecha_fin', width: 15 }
+            ];
 
-            // Clear content and styles for rows 4 to 100
-            for (let r = 4; r <= 100; r++) {
-                const row = ws.getRow(r);
-                for (let c = 1; c <= 10; c++) {
-                    const cell = row.getCell(c);
-                    cell.value = null;
-                    cell.border = {};
-                    cell.fill = { type: 'pattern', pattern: 'none' };
-                }
-            }
+            // 3. Fila 2: Título institucional
+            ws.mergeCells('A2:J2');
+            const titleCell = ws.getCell('A2');
+            titleCell.value = ` ${planeacion.disciplina.toUpperCase()}    ${planeacion.grado}º. GRADO         ${cycle.name.toUpperCase()}`;
+            titleCell.font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
+            titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0A203E' } };
+            titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+            ws.getRow(2).height = 26;
 
-            // 5. Llenar los datos de los PDAs iterando las filas a partir de la 4
-            let currentContenido = pdas.length > 0 ? pdas[0].contenido : null;
+            // 4. Fila 3: Encabezados de columnas
+            const headers = [
+                'CONTENIDO',
+                'No PROGR. PDA',
+                'PROCESOS DE DESARROLLO DE APRENDIZAJE      PDA',
+                'TEMAS A ATENDER PARA EL LOGRO DE LOS PROCESOS DE DESARROLLO DE APRENDIZAJE',
+                'No. DE SESIONES PARA EL LOGRO DEL PDA.',
+                'Verbo Rector',
+                'Complejidad',
+                'Rango Sugerido',
+                'FECHA INICIO',
+                'FECHA FIN'
+            ];
+
+            const headerRow = ws.getRow(3);
+            headerRow.height = 38;
+            headers.forEach((h, idx) => {
+                const cell = headerRow.getCell(idx + 1);
+                cell.value = h;
+                cell.font = { name: 'Calibri', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1178C2' } };
+                cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+                cell.border = {
+                    top: { style: 'medium', color: { argb: 'FF0A203E' } },
+                    bottom: { style: 'medium', color: { argb: 'FF0A203E' } },
+                    left: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                    right: { style: 'thin', color: { argb: 'FFFFFFFF' } }
+                };
+            });
+
+            // 5. Llenar los datos de los PDAs
+            let currentContenido = null;
             let startMergeRow = 4;
 
             pdas.forEach((pda, i) => {
                 const rIdx = 4 + i;
                 const row = ws.getRow(rIdx);
+                row.height = 28;
 
                 row.getCell(1).value = pda.contenido || '';
-                row.getCell(2).value = pda.pda_number;
+                row.getCell(2).value = Number(pda.pda_number) || (i + 1);
                 row.getCell(3).value = pda.topic || '';
                 row.getCell(4).value = pda.temas || '';
-                row.getCell(5).value = pda.sessions_count;
+                row.getCell(5).value = Number(pda.sessions_count) || 0;
                 row.getCell(6).value = pda.verbo_rector || '';
                 row.getCell(7).value = pda.complejidad || '';
                 row.getCell(8).value = pda.rango_sugerido || '';
                 row.getCell(9).value = pda.start_date || '';
                 row.getCell(10).value = pda.end_date || '';
 
-                // Style the row
+                const isEven = i % 2 === 0;
+                const rowBgColor = isEven ? 'FFFFFFFF' : 'FFF8FAFC';
+
                 for (let colIdx = 1; colIdx <= 10; colIdx++) {
                     const cell = row.getCell(colIdx);
+                    cell.font = { name: 'Calibri', size: 10, color: { argb: 'FF0F172A' } };
+                    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBgColor } };
+                    cell.border = {
+                        top: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                        bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                        left: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                        right: { style: 'thin', color: { argb: 'FFCBD5E1' } }
+                    };
                     cell.alignment = {
                         vertical: 'middle',
-                        horizontal: (colIdx === 2 || colIdx === 5 || colIdx === 7) ? 'center' : 'left',
-                        wrapText: true
+                        horizontal: (colIdx === 2 || colIdx === 5 || colIdx === 6 || colIdx === 7 || colIdx === 8 || colIdx === 9 || colIdx === 10) ? 'center' : 'left',
+                        wrapText: (colIdx === 1 || colIdx === 3 || colIdx === 4)
                     };
-                    cell.border = {
-                        top: { style: 'thin' },
-                        bottom: { style: 'thin' },
-                        left: { style: 'thin' },
-                        right: { style: 'thin' }
-                    };
-                    cell.font = { name: 'Arial', size: 10 };
                 }
 
-                // Lógica para combinar celdas de "Contenido"
-                if (i === pdas.length - 1 || pdas[i + 1].contenido !== currentContenido) {
-                    if (rIdx > startMergeRow) {
-                        ws.mergeCells(`A${startMergeRow}:A${rIdx}`);
+                // Lógica de combinación de celdas idénticas en Contenido
+                const contenidoVal = (pda.contenido || '').trim();
+                if (i === 0) {
+                    currentContenido = contenidoVal;
+                    startMergeRow = rIdx;
+                } else if (contenidoVal !== currentContenido) {
+                    if (startMergeRow < rIdx - 1 && currentContenido) {
+                        ws.mergeCells(`A${startMergeRow}:A${rIdx - 1}`);
                     }
-                    if (i < pdas.length - 1) {
-                        startMergeRow = rIdx + 1;
-                        currentContenido = pdas[i + 1].contenido;
+                    currentContenido = contenidoVal;
+                    startMergeRow = rIdx;
+                }
+
+                if (i === pdas.length - 1) {
+                    if (startMergeRow < rIdx && currentContenido) {
+                        ws.mergeCells(`A${startMergeRow}:A${rIdx}`);
                     }
                 }
             });
@@ -112,9 +149,8 @@ const ExcelExport = (() => {
             const buffer = await workbook.xlsx.writeBuffer();
             const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-            const sanitizedSubj = planeacion.disciplina.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            // Genera el nombre del archivo con el formato: Dosificacion-materia-grado.xlsx (sin acentos ni espacios)
-            const fileName = `Dosificacion-${sanitizedSubj}-${planeacion.grado}.xlsx`;
+            const sanitizedSubj = planeacion.disciplina.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const fileName = `dosificacion_${sanitizedSubj}_${planeacion.grado}.xlsx`;
 
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -131,10 +167,106 @@ const ExcelExport = (() => {
         }
     }
 
-    function descargarPlantilla() {
+    async function descargarPlantilla() {
         try {
+            showToast('Generando plantilla Excel...', 'info');
+
+            const workbook = new ExcelJS.Workbook();
+            workbook.creator = 'Jokarhe Systems';
+            workbook.lastModifiedBy = 'Jokarhe Systems';
+            workbook.created = new Date();
+            workbook.modified = new Date();
+
+            const ws = workbook.addWorksheet('Plantilla-Dosificación');
+            ws.views = [{ showGridLines: true }];
+
+            ws.columns = [
+                { key: 'contenido', width: 28 },
+                { key: 'pda_no', width: 9 },
+                { key: 'pda', width: 46 },
+                { key: 'temas', width: 36 },
+                { key: 'sesiones', width: 12 },
+                { key: 'verbo', width: 16 },
+                { key: 'complejidad', width: 14 },
+                { key: 'rango', width: 18 },
+                { key: 'fecha_inicio', width: 15 },
+                { key: 'fecha_fin', width: 15 }
+            ];
+
+            // Fila 2: Título
+            ws.mergeCells('A2:J2');
+            const titleCell = ws.getCell('A2');
+            titleCell.value = ' [DISCIPLINA]    [GRADO]º. GRADO         [CICLO ESCOLAR]';
+            titleCell.font = { name: 'Calibri', size: 12, bold: true, color: { argb: 'FFFFFFFF' } };
+            titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF0A203E' } };
+            titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+            ws.getRow(2).height = 26;
+
+            // Fila 3: Encabezados
+            const headers = [
+                'CONTENIDO',
+                'No PROGR. PDA',
+                'PROCESOS DE DESARROLLO DE APRENDIZAJE      PDA',
+                'TEMAS A ATENDER PARA EL LOGRO DE LOS PROCESOS DE DESARROLLO DE APRENDIZAJE',
+                'No. DE SESIONES PARA EL LOGRO DEL PDA.',
+                'Verbo Rector',
+                'Complejidad',
+                'Rango Sugerido',
+                'FECHA INICIO',
+                'FECHA FIN'
+            ];
+
+            const headerRow = ws.getRow(3);
+            headerRow.height = 38;
+            headers.forEach((h, idx) => {
+                const cell = headerRow.getCell(idx + 1);
+                cell.value = h;
+                cell.font = { name: 'Calibri', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1178C2' } };
+                cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+                cell.border = {
+                    top: { style: 'medium', color: { argb: 'FF0A203E' } },
+                    bottom: { style: 'medium', color: { argb: 'FF0A203E' } },
+                    left: { style: 'thin', color: { argb: 'FFFFFFFF' } },
+                    right: { style: 'thin', color: { argb: 'FFFFFFFF' } }
+                };
+            });
+
+            // Fila 4: Ejemplo
+            const row = ws.getRow(4);
+            row.height = 28;
+            row.getCell(1).value = 'Los derechos humanos en México y en el mundo como valores compartidos por las sociedades actuales.';
+            row.getCell(2).value = 1;
+            row.getCell(3).value = 'Asume una postura crítica acerca de la vigencia de los derechos humanos como valores compartidos por distintas sociedades del mundo.';
+            row.getCell(4).value = 'Concepto de derechos humanos y su evolución histórica.';
+            row.getCell(5).value = 4;
+            row.getCell(6).value = 'Asume';
+            row.getCell(7).value = 'Media';
+            row.getCell(8).value = 'Semana 1-2';
+            row.getCell(9).value = '';
+            row.getCell(10).value = '';
+
+            for (let colIdx = 1; colIdx <= 10; colIdx++) {
+                const cell = row.getCell(colIdx);
+                cell.font = { name: 'Calibri', size: 10, color: { argb: 'FF0F172A' } };
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                    bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                    left: { style: 'thin', color: { argb: 'FFCBD5E1' } },
+                    right: { style: 'thin', color: { argb: 'FFCBD5E1' } }
+                };
+                cell.alignment = {
+                    vertical: 'middle',
+                    horizontal: (colIdx === 2 || colIdx === 5 || colIdx === 6 || colIdx === 7 || colIdx === 8 || colIdx === 9 || colIdx === 10) ? 'center' : 'left',
+                    wrapText: (colIdx === 1 || colIdx === 3 || colIdx === 4)
+                };
+            }
+
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             const link = document.createElement('a');
-            link.href = 'assets/template.xlsx';
+            link.href = URL.createObjectURL(blob);
             link.download = "Plantilla-Planeacion-NEM.xlsx";
             document.body.appendChild(link);
             link.click();
@@ -142,7 +274,7 @@ const ExcelExport = (() => {
             showToast('Plantilla descargada.', 'success');
         } catch (e) {
             console.error(e);
-            showToast('Error al descargar la plantilla.', 'error');
+            showToast('Error al descargar la plantilla: ' + e.message, 'error');
         }
     }
 

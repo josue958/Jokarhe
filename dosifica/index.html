@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jokarhe Systems — Planeador NEM</title>
     <!-- Google Fonts Inter -->
-    <link rel="stylesheet" href="css/styles.css">
-
+    <link rel="stylesheet" href="css/styles.css?v=12">
+    <link rel="stylesheet" href="css/cronograma.css?v=2">
     <!-- SQL.js (SQLite WASM) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
     <!-- ExcelJS -->
@@ -17,14 +17,16 @@
 <body>
     <header class="app-header">
         <a href="../" class="header-brand">
-            <img src="assets/img/logo.png" alt="Jokarhe Systems Logo" class="app-logo" style="height: 36px; width: auto; margin-right: 12px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+            <img src="assets/img/logo.png" alt="Jokarhe Systems Logo" class="app-logo"
+                style="height: 36px; width: auto; margin-right: 12px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
             <h1>Jokarhe Systems <span>— Planeador NEM</span></h1>
         </a>
         <nav class="nav-tabs">
-            <button class="nav-tab-btn active" data-target="tab-dosificar">⚡ Planear</button>
-            <button class="nav-tab-btn" data-target="tab-planeaciones">📚 Planeaciones</button>
+            <button class="nav-tab-btn active" data-target="tab-planeaciones">📚 Planeaciones</button>
+            <button class="nav-tab-btn" data-target="tab-dosificar" style="display: none;">⚡ Planear</button>
             <button class="nav-tab-btn" data-target="tab-ciclos">📅 Ciclos Escolares</button>
             <button class="nav-tab-btn" data-target="tab-cronograma">🗓️ Cronograma</button>
+            <button class="nav-tab-btn" data-target="tab-ia">🤖 Configuración IA</button>
             <button class="nav-tab-btn" data-target="tab-respaldo">💾 Respaldo</button>
         </nav>
     </header>
@@ -35,104 +37,9 @@
     <main class="main-container">
 
         <!-- ==================== TAB 1: PLANEAR ==================== -->
-        <section id="tab-dosificar" class="tab-section">
-            <!-- Vista de Configuración Inicial (si no hay planeación cargada) -->
-            <div id="dosificar-setup" class="card-2xl bg-grid-pattern">
-                <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-                    <span style="font-size: 48px; display: block; margin-bottom: 16px;">⚡</span>
-                    <h2>Planeador NEM (Fase 6)</h2>
-                    <p class="subtitle">Genera la tabla de planeación y distribución de sesiones de tus asignaturas.
-                        Selecciona un ciclo y una disciplina para iniciar la planificación.</p>
-                </div>
-
-                <div style="max-width: 700px; margin: 32px auto 0;">
-                    <form id="setup-plan-form">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">Ciclo Escolar</label>
-                                <select id="setup-cycle" class="form-control" required>
-                                    <option value="">Seleccionar ciclo...</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Disciplina / Asignatura</label>
-                                <select id="setup-discipline" class="form-control" required>
-                                    <option value="">Seleccionar disciplina...</option>
-                                    <option value="Español">Español</option>
-                                    <option value="Matemáticas">Matemáticas</option>
-                                    <option value="Ciencias (Biología/Física/Química)">Ciencias
-                                        (Biología/Física/Química)</option>
-                                    <option value="Historia">Historia</option>
-                                    <option value="Geografía">Geografía</option>
-                                    <option value="Inglés">Inglés</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Grado de Secundaria</label>
-                                <select id="setup-grade" class="form-control" required>
-                                    <option value="">Seleccionar grado...</option>
-                                    <option value="1">1º Grado</option>
-                                    <option value="2">2º Grado</option>
-                                    <option value="3">3º Grado</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-grid" style="grid-template-columns: 1fr; margin-bottom: 16px;">
-                            <div class="form-group">
-                                <label class="form-label">Horas Semanales (1 a 8)</label>
-                                <input type="number" id="setup-weekly-hours" class="form-control" min="1" max="8"
-                                    value="4" required style="max-width: 200px;">
-                            </div>
-                        </div>
-
-                        <div class="form-group" style="margin-bottom: 24px;">
-                            <label class="form-label">Horario Semanal (Distribución de horas por día)</label>
-                            <div class="schedule-grid">
-                                <div class="schedule-day">
-                                    <label>Lun</label>
-                                    <input type="number" id="setup-day-1" class="day-input" min="0" max="6" value="1"
-                                        required>
-                                </div>
-                                <div class="schedule-day">
-                                    <label>Mar</label>
-                                    <input type="number" id="setup-day-2" class="day-input" min="0" max="6" value="1"
-                                        required>
-                                </div>
-                                <div class="schedule-day">
-                                    <label>Mié</label>
-                                    <input type="number" id="setup-day-3" class="day-input" min="0" max="6" value="1"
-                                        required>
-                                </div>
-                                <div class="schedule-day">
-                                    <label>Jue</label>
-                                    <input type="number" id="setup-day-4" class="day-input" min="0" max="6" value="1"
-                                        required>
-                                </div>
-                                <div class="schedule-day">
-                                    <label>Vie</label>
-                                    <input type="number" id="setup-day-5" class="day-input" min="0" max="6" value="0"
-                                        required>
-                                </div>
-                            </div>
-                            <div id="setup-schedule-error" class="alert alert-error"
-                                style="display:none; padding:10px 14px; margin-top:12px; font-size:12px;">
-                                La suma de horas diarias no coincide con las horas semanales.
-                            </div>
-                        </div>
-
-                        <div style="text-align: center; margin-top: 32px;">
-                            <button type="submit" id="setup-submit-btn" class="btn btn-primary"
-                                style="padding: 14px 40px; font-size: 1rem;">
-                                🚀 Iniciar Planeación
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
+        <section id="tab-dosificar" class="tab-section" style="display: none;">
             <!-- Vista del Planificador e Interactividad de PDAs (se muestra al cargar planeación) -->
-            <div id="dosificar-planner" class="card-2xl planner-view" style="display: none;">
+            <div id="dosificar-planner" class="card-2xl planner-view">
                 <div class="planner-header">
                     <div>
                         <h2 id="planner-subject-title">Planeación: Matemáticas 1º</h2>
@@ -141,9 +48,33 @@
                     </div>
                     <div style="display: flex; gap: 10px;">
                         <button id="planner-btn-back" class="btn btn-secondary">← Volver</button>
+                        <button id="planner-btn-export-zip" class="btn btn-primary"
+                            onclick="exportAllCompletedPdas()">🗂️ Exportar PDAs (ZIP)</button>
                         <button id="planner-btn-export" class="btn btn-success">📊 Exportar a Excel</button>
                         <button id="planner-btn-save" class="btn btn-primary">💾 Guardar Cambios</button>
                     </div>
+                </div>
+
+                <!-- Controles de Edición de PDA y Herramientas IA -->
+                <div class="planner-footer"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 15px; width: 100%;">
+                    <button id="planner-btn-add-pda" class="btn btn-secondary btn-sm" style="width: 100%;">➕ Agregar
+                        Fila de PDA</button>
+                    <button id="planner-btn-ai-temas" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="generateTemasAI()">🤖 Temas a Atender</button>
+                    <button id="planner-btn-ai-verbo" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="generateVerboAI()">🤖 Verbo Rector</button>
+                    <button id="planner-btn-ai-rango" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="generateRangoAI()">🤖 Rango Sugerido</button>
+                    <button id="planner-btn-calc-sessions" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="calculatePdaSessions()">🤖 Calcular Sesiones</button>
+                    <button id="planner-btn-calc-dates" class="btn btn-secondary btn-sm" style="width: 100%;"
+                        onclick="calculatePdaDates()">📅 Calcular Fechas</button>
+                    <button id="planner-btn-ai-bulk" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="openBulkPdaModal()">🤖 Generar Planeaciones</button>
+                    <button id="planner-btn-generate-docs" class="btn btn-primary btn-sm" style="width: 100%;"
+                        onclick="generateAllPdaDocFiles()">📄 Generar archivos</button>
+                    <div id="planner-balance-msg" style="grid-column: 1 / -1; font-size: 13px; font-weight: 600;"></div>
                 </div>
 
                 <!-- Resumen de Planificación y Balance de Horas -->
@@ -160,6 +91,10 @@
                     <div id="summary-balance-pill" class="summary-pill success">
                         ⚖️ Asignado: <strong id="summary-assigned-sessions">190 / 190</strong>
                     </div>
+                </div>
+
+                <div id="ai-countdown-banner" class="alert alert-warning" style="display: none; text-align: center; font-weight: bold; margin-bottom: 15px;">
+                    ⏳ Espera <span id="ai-countdown-timer">30</span> segundos para poder usar la IA nuevamente.
                 </div>
 
                 <!-- Tabla de Planeación de PDAs -->
@@ -183,14 +118,14 @@
                                 <th class="col-contenido">Contenido</th>
                                 <th class="col-no">No.</th>
                                 <th class="col-pda">Proceso de Desarrollo de Aprendizaje (PDA)</th>
-                                <th class="col-temas">Temas a Atender</th>
-                                <th class="col-sesiones">Sesiones</th>
-                                <th class="col-verbo-rector">Verbo Rector</th>
-                                <th class="col-complejidad">Complejidad</th>
-                                <th class="col-rango">Rango Sugerido</th>
-                                <th class="col-fecha">Fecha Inicio</th>
+                                <th class="col-temas">Temas a Atender <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('temas')" title="Limpiar y desmarcar todo">🗑️</button></th>
+                                <th class="col-sesiones">Sesiones <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('sesiones')" title="Limpiar y desmarcar todo">🗑️</button></th>
+                                <th class="col-verbo-rector">Verbo Rector <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('verbo')" title="Limpiar y desmarcar todo">🗑️</button></th>
+                                <th class="col-complejidad">Complejidad <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('complejidad')" title="Limpiar todo">🗑️</button></th>
+                                <th class="col-rango">Rango Sugerido <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('rango')" title="Limpiar y desmarcar todo">🗑️</button></th>
+                                <th class="col-fecha">Fecha Inicio <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('fechas')" title="Limpiar y desmarcar todo">🗑️</button></th>
                                 <th class="col-fecha">Fecha Fin</th>
-                                <th class="col-accion">Acción</th>
+                                <th class="col-accion">Acción <button class="btn btn-sm btn-danger" style="padding: 0 4px; font-size: 10px; margin-left: 4px;" onclick="clearPlannerColumn('accion')" title="Limpiar planeaciones y desmarcar">🗑️</button></th>
                             </tr>
                         </thead>
                         <tbody id="planner-tbody">
@@ -198,20 +133,11 @@
                         </tbody>
                     </table>
                 </div>
-
-                <div class="planner-footer">
-                    <button id="planner-btn-add-pda" class="btn btn-secondary btn-sm">➕ Agregar Fila de PDA</button>
-                    <button id="planner-btn-calc-dates" class="btn btn-secondary btn-sm"
-                        onclick="calculatePdaDates()">🤖 Calcular Fechas</button>
-                    <button id="planner-btn-calc-sessions" class="btn btn-secondary btn-sm"
-                        onclick="calculatePdaSessions()">🤖 Calcular Sesiones</button>
-                    <div id="planner-balance-msg" style="font-size: 13px; font-weight: 600;"></div>
-                </div>
             </div>
         </section>
 
         <!-- ==================== TAB 2: MIS PLANEACIONES ==================== -->
-        <section id="tab-planeaciones" class="tab-section" style="display: none;">
+        <section id="tab-planeaciones" class="tab-section">
             <div class="card-2xl">
                 <div
                     style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 12px;">
@@ -230,14 +156,24 @@
                 <div id="planeaciones-list-container">
                     <!-- Tabla de Planeaciones -->
                     <div class="table-responsive">
-                        <table class="custom-table">
+                        <table class="custom-table" id="planeaciones-table">
                             <thead>
                                 <tr>
-                                    <th>Disciplina</th>
-                                    <th>Grado</th>
-                                    <th>Ciclo Escolar</th>
-                                    <th>Horario Semanal</th>
-                                    <th>Total PDAs</th>
+                                    <th class="sortable-th" onclick="sortPlaneacionesBy('disciplina')" data-sort="disciplina" title="Clic para ordenar por Disciplina">
+                                        Disciplina <span class="sort-icon" id="sort-icon-disciplina">↕</span>
+                                    </th>
+                                    <th class="sortable-th" onclick="sortPlaneacionesBy('grado')" data-sort="grado" title="Clic para ordenar por Grado">
+                                        Grado <span class="sort-icon" id="sort-icon-grado">↕</span>
+                                    </th>
+                                    <th class="sortable-th" onclick="sortPlaneacionesBy('cycle_name')" data-sort="cycle_name" title="Clic para ordenar por Ciclo Escolar">
+                                        Ciclo Escolar <span class="sort-icon" id="sort-icon-cycle_name">↕</span>
+                                    </th>
+                                    <th class="sortable-th" onclick="sortPlaneacionesBy('schedule')" data-sort="schedule" title="Clic para ordenar por Horas Semanales">
+                                        Horario Semanal <span class="sort-icon" id="sort-icon-schedule">↕</span>
+                                    </th>
+                                    <th class="sortable-th" onclick="sortPlaneacionesBy('total_pdas')" data-sort="total_pdas" title="Clic para ordenar por Total de PDAs">
+                                        Total PDAs <span class="sort-icon" id="sort-icon-total_pdas">↕</span>
+                                    </th>
                                     <th style="text-align: right;">Acciones</th>
                                 </tr>
                             </thead>
@@ -275,6 +211,94 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <!-- Gestión de Leyendas del Cronograma -->
+                <div class="card-lg" style="margin-top: 24px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <h3 style="margin-bottom: 4px;">🏷️ Leyendas del Cronograma</h3>
+                            <p class="subtitle" style="font-size:0.8rem; margin-bottom: 0;">Administra las categorías y tipos de eventos que impactan el cronograma, la asignación de festivos y el cálculo de sesiones.</p>
+                        </div>
+                        <button type="button" id="btn-reset-legends" class="btn btn-secondary btn-sm" title="Restaurar leyendas de fábrica">🔄 Restaurar</button>
+                    </div>
+
+                    <!-- Tabla de Leyendas Existentes -->
+                    <div class="table-responsive" style="margin-top: 0; margin-bottom: 16px;">
+                        <table class="custom-table" style="font-size: 0.82rem;">
+                            <thead>
+                                <tr>
+                                    <th>Leyenda</th>
+                                    <th>Color</th>
+                                    <th>Inhabilita</th>
+                                    <th style="text-align: right;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crono-legends-tbody">
+                                <!-- Inyectado dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Formulario CRUD de Leyendas -->
+                    <form id="crono-legend-form" style="border-top: 1px solid var(--border-color); padding-top: 14px;">
+                        <input type="hidden" id="crono-legend-id">
+                        <h4 id="crono-legend-form-title" style="margin-bottom: 10px; font-size: 0.88rem; font-weight: 700; color: var(--text-color);">
+                            ➕ Nueva Leyenda
+                        </h4>
+
+                        <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                            <div class="form-group">
+                                <label class="form-label" style="font-size: 0.75rem;">Nombre de la Leyenda</label>
+                                <input type="text" id="crono-legend-name" class="form-control" placeholder="Ej. Evento Cívico" required style="padding:6px 12px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="font-size: 0.75rem;">Color Base</label>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    <input type="color" id="crono-legend-color-picker" value="#3B82F6" style="width: 38px; height: 34px; padding: 2px; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer;">
+                                    <input type="text" id="crono-legend-color" class="form-control" value="#3B82F6" placeholder="#3B82F6" required style="padding:6px 10px; font-family: monospace; font-size: 0.85rem;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selector de Emoji / Icono -->
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label class="form-label" style="font-size: 0.75rem;">Icono / Emoji</label>
+                            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                <input type="text" id="crono-legend-icon" class="form-control" value="📌" required style="width: 60px; text-align: center; font-size: 1.1rem; padding: 4px;">
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🔴')">🔴</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🟡')">🟡</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🟢')">🟢</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🔵')">🔵</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🟦')">🟦</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🟣')">🟣</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🟠')">🟠</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('⭐')">⭐</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('📌')">📌</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('📚')">📚</button>
+                                    <button type="button" class="emoji-quick-btn" onclick="selectQuickEmoji('🎓')">🎓</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 8px;">
+                            <label class="form-label" style="font-size: 0.75rem;">Palabras Clave (para auto-detección e importación)</label>
+                            <input type="text" id="crono-legend-keywords" class="form-control" placeholder="Ej. cívico, ceremonia, desfile" style="padding:6px 12px; font-size: 0.8rem;">
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; cursor: pointer; color: var(--text-color);">
+                                <input type="checkbox" id="crono-legend-inhabile" checked style="width: 16px; height: 16px; accent-color: var(--primary);">
+                                <strong>¿Inhabilita sesiones escolares?</strong> <span style="font-size: 0.75rem; color: var(--text-secondary);">(Resta días hábiles en dosificación)</span>
+                            </label>
+                        </div>
+
+                        <div style="display: flex; gap: 8px;">
+                            <button type="submit" id="btn-crono-legend-submit" class="btn btn-primary btn-sm" style="flex:1;">💾 Guardar Leyenda</button>
+                            <button type="button" id="btn-crono-legend-cancel" class="btn btn-secondary btn-sm" style="display:none;">Cancelar</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Formulario y Días Festivos -->
@@ -351,7 +375,26 @@
                             <input type="hidden" id="holiday-orig-date">
                             <h4 id="holiday-form-title"
                                 style="margin-bottom: 10px; font-size: 0.9rem; font-weight: 700; color: var(--text-color);">
-                                Agregar Festivo</h4>
+                                Agregar Festivo / Inhábil</h4>
+
+                            <!-- Etiquetas de Leyenda del Cronograma -->
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label class="form-label" style="font-size: 0.75rem; font-weight: 700;">Etiqueta de Leyenda (Tipo de Evento)</label>
+                                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px;" id="holiday-tag-chips">
+                                    <button type="button" class="btn-holiday-chip active" data-type="inhabiles" data-default="Suspensión de Labores" style="background: rgba(239, 68, 68, 0.15); color: #dc2626; border-color: #ef4444;">🔴 Inhábil / Vacaciones</button>
+                                    <button type="button" class="btn-holiday-chip" data-type="cte" data-default="Consejo Técnico Escolar (CTE)" style="background: rgba(201, 166, 70, 0.18); color: #854d0e; border-color: #C9A646;">🟡 Consejo Técnico (CTE)</button>
+                                    <button type="button" class="btn-holiday-chip" data-type="calificaciones" data-default="Registro de Calificaciones" style="background: rgba(34, 197, 94, 0.15); color: #166534; border-color: #22c55e;">🟢 Registro Calificaciones</button>
+                                    <button type="button" class="btn-holiday-chip" data-type="diagnostico" data-default="Periodo Diagnóstico (MEJOREDU)" style="background: rgba(30, 144, 255, 0.15); color: #1d4ed8; border-color: #1E90FF;">🔵 Diagnóstico</button>
+                                    <button type="button" class="btn-holiday-chip" data-type="taller" data-default="Taller Intensivo para Docentes" style="background: rgba(59, 130, 246, 0.15); color: #1e3a8a; border-color: #3b82f6;">🟦 Taller Docente</button>
+                                </div>
+                                <select id="holiday-tag-select" class="form-control" style="padding:6px 12px; font-size:0.85rem; font-weight: 600; display:none;">
+                                    <option value="inhabiles">🔴 Inhábil / Vacaciones / Suspensión</option>
+                                    <option value="cte">🟡 Consejo Técnico (CTE)</option>
+                                    <option value="calificaciones">🟢 Registro Calificaciones</option>
+                                    <option value="diagnostico">🔵 Diagnóstico</option>
+                                    <option value="taller">🟦 Taller Docente</option>
+                                </select>
+                            </div>
 
                             <div class="form-grid"
                                 style="grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
@@ -370,7 +413,7 @@
                             <div class="form-group" style="margin-bottom: 12px;">
                                 <label class="form-label" style="font-size: 0.75rem;">Motivo / Descripción</label>
                                 <input type="text" id="holiday-label" class="form-control"
-                                    placeholder="Ej. Vacaciones de Invierno" required style="padding:6px 12px;">
+                                    placeholder="Ej. Suspensión de Labores" required style="padding:6px 12px;">
                             </div>
 
                             <div style="display: flex; gap: 8px;">
@@ -389,17 +432,222 @@
                 </div>
             </div>
         </section>
-
         <!-- ==================== TAB 4: CRONOGRAMA ==================== -->
-        <section id="tab-cronograma" class="tab-section hidden">
-            <header class="section-header">
-                <h2>🗓️ Cronograma Escolar</h2>
-                <div class="header-actions">
-                    <button class="btn btn-primary" onclick="renderCronogramaEscolar()">🔄 Actualizar</button>
+        <section id="tab-cronograma" class="tab-section" style="display: none;">
+            <div class="card-2xl">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2>🗓️ Cronograma y Calendario Escolar</h2>
+                        <p class="subtitle" style="margin-bottom: 0;">Selecciona una materia o ciclo escolar para consultar su calendario trimestral y días inhábiles.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <label style="font-weight: 700; font-size: 0.88rem; color: #1e293b;">Materia:</label>
+                        <select id="crono-plan-select" class="form-control" style="min-width: 280px; font-weight: 600;" onchange="onCronoPlanSelectChange(this.value)">
+                            <!-- Inyectado por JS -->
+                        </select>
+                        <button class="btn btn-primary btn-sm" onclick="renderCronogramaEscolar()">🔄 Actualizar</button>
+                        <button class="btn btn-success btn-sm" id="btn-export-cronograma-excel" onclick="exportCronogramaExcel()">📊 Exportar Cronograma a Excel</button>
+                    </div>
                 </div>
-            </header>
-            <div class="page-content" id="cronograma-wrapper">
-                <!-- El calendario se dibujará aquí por JS -->
+
+                <div id="cronograma-wrapper">
+                    <!-- Inyectado por JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB 5: CONFIGURACIÓN IA ==================== -->
+        <section id="tab-ia" class="tab-section" style="display: none;">
+            <div class="card-2xl">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                    <div>
+                        <h2>🤖 Configuración de Instrucciones de Inteligencia Artificial</h2>
+                        <p class="subtitle" style="margin-bottom: 0;">Personaliza las indicaciones específicas que utiliza la IA para cada campo de la Planeación Detallada y cada botón del Planificador.</p>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="btn-reset-ai-all" class="btn btn-secondary btn-sm" onclick="resetAllAIInstructions()">🔄 Restablecer Todo por Defecto</button>
+                        <button id="btn-save-ai-all" class="btn btn-primary btn-save-ai-all btn-sm" onclick="saveAllAIInstructions()">💾 Guardar Todas las Instrucciones</button>
+                    </div>
+                </div>
+
+                <!-- 1. Rol Pedagógico y Contexto General -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-lg); padding: 20px; margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <h4 style="margin: 0; color: #0f172a;">🎭 Rol Pedagógico y Contexto General</h4>
+                        <span class="badge badge-primary">Global</span>
+                    </div>
+                    <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 12px;">Define la identidad del docente, estilos de aprendizaje de los alumnos, materiales disponibles y enfoque de valores para todas las generaciones.</p>
+                    <textarea id="ai-inst-rol" class="form-control" rows="5" style="font-family: monospace; font-size: 0.88rem;"></textarea>
+                </div>
+
+                <!-- 2. Instrucciones para la Planeación Detallada (Modal PDA & Generación Masiva) -->
+                <h3 style="margin-bottom: 16px; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">📋 Instrucciones para Secciones de la Planeación Detallada</h3>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                    
+                    <!-- Ejes Articuladores -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🧭 Ejes Articuladores</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-ejes</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Indicación para seleccionar y vincular los ejes de la NEM.</p>
+                        <textarea id="ai-inst-ejes" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Campo Formativo -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">📚 Campo Formativo</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-campo-formativo</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Indicación para determinar el campo formativo según la disciplina.</p>
+                        <textarea id="ai-inst-campo" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Sugerencia de Evaluación -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">📝 Sugerencia de Evaluación</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-sugerencia-eval</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción sobre el tipo y metodología de evaluación formativa.</p>
+                        <textarea id="ai-inst-eval" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Nombre del Proyecto -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">💡 Nombre del Proyecto</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-nombre-proyecto</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para crear títulos motivadores y creativos.</p>
+                        <textarea id="ai-inst-proyecto" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Producto Final -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">📦 Producto Final</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-producto</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Indicación del entregable tangible o presentación final.</p>
+                        <textarea id="ai-inst-producto" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Problemática -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">⚠️ Problemática</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-problematica</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para plantear el problema de contexto escolar o comunitario.</p>
+                        <textarea id="ai-inst-problematica" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Propósito -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🎯 Propósito</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-proposito</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para redactar la meta y propósito educativo.</p>
+                        <textarea id="ai-inst-proposito" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Observaciones -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🔍 Observaciones y Ajustes</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-observaciones</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para recomendaciones de seguimiento y ajustes razonables.</p>
+                        <textarea id="ai-inst-observaciones" class="form-control" rows="3" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+                </div>
+
+                <!-- Desarrollo de Sesiones, Rúbrica y Teoría (Campos Extensos) -->
+                <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px;">
+                    
+                    <!-- Desarrollo de Sesiones -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">⏱️ Desarrollo de Sesiones (Momentos y Tiempos)</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-desarrollo-sesiones</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Estructura obligatoria para desglosar las sesiones (50 min, Inicio, Desarrollo, Cierre, y los 4 Momentos de la NEM).</p>
+                        <textarea id="ai-inst-sesiones-detalle" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Rúbrica de Evaluación -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">📊 Rúbrica de Evaluación</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-rubrica</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Estructura de la tabla Markdown (Criterios, Indicadores de Logro y Calificación).</p>
+                        <textarea id="ai-inst-rubrica" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Teoría para el Docente -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">📖 Teoría para el Docente</label>
+                            <span class="badge badge-secondary" style="font-size: 10px;">pda-teoria</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Marco conceptual conciso y 5 ejemplos prácticos resueltos para el docente.</p>
+                        <textarea id="ai-inst-teoria" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+                </div>
+
+                <!-- 3. Instrucciones para los Botones del Planificador -->
+                <h3 style="margin-bottom: 16px; color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">⚡ Instrucciones de los Botones del Planificador</h3>
+                <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                    
+                    <!-- Botón Temas a Atender -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🤖 Botón: Temas a Atender</label>
+                            <span class="badge badge-primary" style="font-size: 10px;">generateTemasAI()</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción enviada a la IA para deducir temas a partir del PDA y contenido.</p>
+                        <textarea id="ai-inst-btn-temas" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Botón Verbo Rector -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🤖 Botón: Verbo Rector y Complejidad</label>
+                            <span class="badge badge-primary" style="font-size: 10px;">generateVerboAI()</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción de Taxonomía de Bloom para extraer verbo y nivel de complejidad.</p>
+                        <textarea id="ai-inst-btn-verbo" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Botón Rango Sugerido -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🤖 Botón: Rango Sugerido</label>
+                            <span class="badge badge-primary" style="font-size: 10px;">generateRangoAI()</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para estimar el rango de sesiones según la complejidad.</p>
+                        <textarea id="ai-inst-btn-rango" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+
+                    <!-- Botón Calcular Sesiones -->
+                    <div style="border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-md); background: #fff;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="margin: 0;">🤖 Botón: Calcular Sesiones</label>
+                            <span class="badge badge-primary" style="font-size: 10px;">calculatePdaSessions()</span>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--text-gray-600); margin-bottom: 8px;">Instrucción para distribuir exactamente las sesiones del ciclo entre todos los PDAs.</p>
+                        <textarea id="ai-inst-btn-sesiones" class="form-control" rows="4" style="font-family: monospace; font-size: 0.85rem;"></textarea>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+                    <button class="btn btn-secondary" onclick="resetAllAIInstructions()">🔄 Restablecer Todo por Defecto</button>
+                    <button class="btn btn-primary btn-save-ai-all" onclick="saveAllAIInstructions()">💾 Guardar Todas las Instrucciones</button>
+                </div>
             </div>
         </section>
 
@@ -435,36 +683,22 @@
                     </div>
                 </div>
 
-                <!-- Configuración API -->
-                <div style="margin-top: 24px; border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-lg);">
-                    <h4>Conexión con Inteligencia Artificial</h4>
-                    <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 20px;">Configura tu clave de API de Gemini para habilitar la generación automática de planeaciones (IA).</p>
-                    <!-- API Key section removed to hardcode it in llave_api.md -->
-                    <div style="display: none;">
-                        <label class="form-label">API Key de Gemini</label>
-                        <input type="password" id="config-gemini-api-key" class="form-control" placeholder="AIzaSy...">
-                        <small style="color:var(--text-secondary); display:block; margin-top:5px; margin-bottom:10px;">La llave se obtiene desde llave_api.md</small>
-                        <button id="btn-save-api-key" class="btn btn-primary" onclick="saveApiKey()">💾 Guardar API Key</button>
+                <!-- Gestión de Disciplinas -->
+                <div
+                    style="margin-top: 24px; border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-lg);">
+                    <h4>Gestión de Disciplinas</h4>
+                    <p class="subtitle" style="font-size: 0.85rem; margin-bottom: 20px;">Personaliza la lista de
+                        asignaturas o disciplinas disponibles en el sistema.</p>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="new-discipline-input" class="form-control"
+                            placeholder="Nombre de la nueva disciplina">
+                        <button id="btn-add-discipline" class="btn btn-primary">➕ Agregar</button>
                     </div>
+                    <ul id="disciplines-list"
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+                        <!-- Poblado por JS -->
+                    </ul>
                 </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const apiKeyInput = document.getElementById('config-gemini-api-key');
-                        const savedKey = localStorage.getItem('gemini_api_key');
-                        if (savedKey) apiKeyInput.value = savedKey;
-                    });
-                    function saveApiKey() {
-                        const key = document.getElementById('config-gemini-api-key').value.trim();
-                        if (key) {
-                            localStorage.setItem('gemini_api_key', key);
-                            showToast('API Key guardada exitosamente.', 'success');
-                        } else {
-                            localStorage.removeItem('gemini_api_key');
-                            showToast('API Key eliminada.', 'success');
-                        }
-                    }
-                </script>
 
                 <div
                     style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 24px; text-align: right;">
@@ -576,6 +810,102 @@
                     <button type="submit" class="btn btn-primary">Validar</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal para Generación Masiva -->
+    <div class="modal-overlay" id="bulk-pda-modal" style="display: none; z-index: 1000;">
+        <div class="modal-content card-2xl" style="max-width: 600px; margin: auto;">
+            <div class="modal-header"
+                style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
+                <div>
+                    <h3 style="margin: 0; color: #1e293b; font-size: 18px;">Generación Masiva de Planeaciones</h3>
+                    <p class="subtitle" style="margin: 5px 0 0 0; font-size: 13px;">Llena los datos fijos; el contenido
+                        será generado por IA.</p>
+                </div>
+                <button type="button" class="btn-ghost" onclick="closeBulkPdaModal()"
+                    style="font-size: 20px; border:none; background:none; cursor:pointer;">✕</button>
+            </div>
+            <form id="bulk-pda-form">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label class="form-label">Nombre de la Escuela</label>
+                        <input type="text" id="bulk-escuela" class="form-control"
+                            placeholder="Ej. Escuela Secundaria Técnica No. 229...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">C.C.T.</label>
+                        <input type="text" id="bulk-cct" class="form-control" placeholder="Ej. 15DST0239U">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Campo Formativo</label>
+                    <input type="text" id="bulk-campo-formativo" class="form-control"
+                        placeholder="Ej. Saberes y Pensamiento Científico...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nombre del Profesor(a)</label>
+                    <input type="text" id="bulk-profesor" class="form-control" placeholder="Ej. Profa. María García">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sugerencia de Evaluación</label>
+                    <input type="text" id="bulk-sugerencia-eval" class="form-control"
+                        placeholder="Ej. Evaluación formativa mediante lista de cotejo...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Observaciones (Opcional)</label>
+                    <textarea id="bulk-observaciones" class="form-control" rows="2"
+                        placeholder="Observaciones generales para todas las planeaciones..."></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label class="form-label">Firma Realizó</label>
+                        <input type="text" id="bulk-firma-realizo" class="form-control"
+                            placeholder="Ej. Docente titular">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Firma Revisó</label>
+                        <input type="text" id="bulk-firma-reviso" class="form-control"
+                            placeholder="Ej. Director / Coordinador">
+                    </div>
+                </div>
+
+                <div class="modal-footer"
+                    style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; gap: 10px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-secondary" onclick="clearBulkForm()">🧹 Limpiar</button>
+                        <button type="button" class="btn btn-success" onclick="saveBulkProfile()">💾 Guardar Datos</button>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeBulkPdaModal()">Cancelar</button>
+                        <button type="submit" id="bulk-modal-save-btn" class="btn btn-primary">🚀 Comenzar Generación Masiva</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Progreso de Generación Masiva -->
+    <div class="modal-overlay" id="bulk-progress-modal" style="display: none; z-index: 2100;">
+        <div class="modal-content card-2xl" style="max-width: 440px; margin: auto; text-align: center; padding: 24px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🤖 ⚡</div>
+            <h3 style="margin-top: 0; color: #0A203E; font-weight: 700;">Generando Planeaciones Masivas...</h3>
+            <p id="bulk-progress-text" style="color: #64748b; font-size: 14px; margin-bottom: 12px;">Iniciando generación con IA...</p>
+            <div style="width: 100%; background-color: #e2e8f0; border-radius: 8px; overflow: hidden; height: 12px; margin-bottom: 10px;">
+                <div id="bulk-progress-bar" style="width: 0%; height: 100%; background-color: #1178C2; transition: width 0.3s ease; border-radius: 8px;"></div>
+            </div>
+            <p id="bulk-progress-count" style="color: #0A203E; font-size: 13px; font-weight: 600; margin: 0;">0 / 0 PDAs completados</p>
+        </div>
+    </div>
+
+    <!-- Modal de Progreso de Exportación -->
+    <div class="modal-overlay" id="export-progress-modal" style="display: none; z-index: 2000;">
+        <div class="modal-content card-2xl" style="max-width: 400px; margin: auto; text-align: center;">
+            <h3 style="margin-top: 0; color: #1e293b;">Exportando PDAs...</h3>
+            <p id="export-progress-text" style="color: #64748b; font-size: 14px;">Preparando documentos...</p>
+            <div style="width: 100%; background-color: #e2e8f0; border-radius: 8px; overflow: hidden; margin-top: 15px; height: 10px;">
+                <div id="export-progress-bar" style="width: 0%; height: 100%; background-color: #208FF0; transition: width 0.3s ease;"></div>
+            </div>
         </div>
     </div>
 
@@ -716,13 +1046,14 @@
     <input type="file" id="default-db-file-input" accept=".sqlite" style="display: none;">
 
     <!-- Cargar Scripts de la Aplicación -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://unpkg.com/html-docx-js@0.3.1/dist/html-docx.js"></script>
     <script src="js/pda_data.js?v=2"></script>
-    <script src="js/db.js?v=2"></script>
-    <script src="js/excel.js?v=3"></script>
-    <script src="js/cronograma.js?v=2"></script>
-    <script src="js/exportDoc.js?v=2"></script>
-    <script src="js/app.js?v=10"></script>
+    <script src="js/db.js?v=4"></script>
+    <script src="js/excel.js?v=6"></script>
+    <script src="js/cronograma.js?v=14"></script>
+    <script src="js/exportDoc.js?v=5"></script>
+    <script src="js/app.js?v=28"></script>
     <script src="js/resizer.js?v=2"></script>
 </body>
 

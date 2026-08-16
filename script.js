@@ -178,11 +178,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            
             const btn = form.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
             
+            // Obtener valores del formulario
+            const name = document.getElementById('form-name').value;
+            const company = document.getElementById('form-company').value || 'N/A';
+            const email = document.getElementById('form-email').value;
+            const phone = document.getElementById('form-phone').value || 'N/A';
+            const message = document.getElementById('form-message').value;
+            
+            // Preparar mensaje para WhatsApp
+            const waText = `Hola Jokarhe Systems.%0AMi nombre es ${name} (Empresa: ${company}).%0AMi correo es ${email} y teléfono ${phone}.%0A%0AMensaje:%0A${message}`;
+            // Se usa el número de pruebas proporcionado. El prefijo +52 o sin prefijo dependerá del registro real, usamos el sugerido:
+            const whatsappUrl = `https://wa.me/5255547036?text=${waText}`;
+            
+            // Preparar enlace mailto
+            const mailtoBody = `Nombre: ${name}\nEmpresa/Institución: ${company}\nCorreo: ${email}\nTeléfono: ${phone}\n\nMensaje:\n${message}`;
+            const mailtoUrl = `mailto:josue958@gmail.com?subject=Nuevo Contacto de ${encodeURIComponent(name)}&body=${encodeURIComponent(mailtoBody)}`;
+            
             btn.innerHTML = 'Enviando...';
             btn.disabled = true;
+            
+            // 1. Abrir cliente de correo (en la misma ventana para minimizar bloqueos de popup)
+            window.location.href = mailtoUrl;
+            
+            // 2. Abrir WhatsApp en una nueva pestaña (algunos navegadores pueden requerir interacción directa para permitir ambas)
+            window.open(whatsappUrl, '_blank');
             
             setTimeout(() => {
                 btn.innerHTML = '¡Mensaje Enviado! ✓';

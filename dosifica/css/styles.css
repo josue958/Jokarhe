@@ -328,6 +328,49 @@ p.subtitle {
   background: var(--color-danger-hover);
 }
 
+.btn-outline-danger {
+  background: var(--bg-white);
+  border: 1px solid #ef4444;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+  background: #fef2f2;
+  border-color: #dc2626;
+  color: #b91c1c;
+}
+
+.btn-outline-danger:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: #cbd5e1;
+  color: #94a3b8;
+}
+
+/* Estado de botón de guardar con cambios pendientes detectados */
+.btn-save-dirty {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+  border: 1px solid #d97706 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6) !important;
+  animation: pulse-save-dirty 1.8s infinite !important;
+}
+
+.btn-save-dirty:hover {
+  background: #d97706 !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.5) !important;
+}
+
+@keyframes pulse-save-dirty {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
 .btn-sm {
   padding: 6px 12px;
   font-size: 0.75rem;
@@ -378,6 +421,41 @@ p.subtitle {
   letter-spacing: 0.05em;
   color: var(--text-gray-600);
   border-bottom: 2px solid var(--border-color);
+}
+
+.custom-table th.sortable-th {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.custom-table th.sortable-th:hover {
+  background-color: #e2e8f0;
+  color: var(--color-primary);
+}
+
+.custom-table th.sortable-th .sort-icon {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.85rem;
+  opacity: 0.45;
+  transition: opacity 0.15s, color 0.15s, transform 0.15s;
+}
+
+.custom-table th.sortable-th:hover .sort-icon {
+  opacity: 0.85;
+}
+
+.custom-table th.sortable-th.active-sort {
+  color: #1178C2;
+  background-color: rgba(17, 120, 194, 0.08);
+}
+
+.custom-table th.sortable-th.active-sort .sort-icon {
+  opacity: 1;
+  color: #1178C2;
+  font-weight: bold;
 }
 
 .custom-table td {
@@ -543,11 +621,14 @@ body.planner-active {
 }
 
 #planner-table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 2;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
   padding: 10px 12px;
   font-size: 0.7rem;
+  background-color: var(--bg-gray-50) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra para separar del contenido */
+  border-bottom: 2px solid var(--border-color); /* Asegurar borde inferior */
 }
 
 #planner-table td {
@@ -829,6 +910,60 @@ body.planner-active {
     border: 1px solid rgba(0,0,0,0.1);
 }
 
+/* Chips y Badges de Leyenda para Días Inhábiles */
+.btn-holiday-chip {
+    border: 1px solid transparent;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.75;
+}
+
+.btn-holiday-chip:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.btn-holiday-chip.active {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--bg-white), 0 0 0 4px currentColor;
+    font-weight: 700;
+    transform: scale(1.02);
+}
+
+.holiday-legend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.emoji-quick-btn {
+    background: var(--bg-gray-100);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s, background 0.15s;
+}
+
+.emoji-quick-btn:hover {
+    background: #e2e8f0;
+    transform: scale(1.15);
+}
+
 .crono-month-card {
     background: var(--bg-white);
     border: 1px solid var(--border-color);
@@ -896,6 +1031,54 @@ body.planner-active {
     font-weight: 700;
     padding: 8px 4px;
     text-transform: uppercase;
+}
+
+.crono-cell-session {
+    font-size: 10px;
+    padding: 5px 2px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.badge-session-tag {
+    display: inline-block;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 700;
+    font-size: 9.5px;
+    letter-spacing: -0.2px;
+    border: 1px solid #bae6fd;
+    line-height: 1.2;
+}
+
+.badge-session-tag-warn {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: #fde68a;
+}
+
+.badge-session-tag-danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.crono-cell-pda {
+    font-size: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: default;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.crono-cell-pda:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    z-index: 5;
+    position: relative;
 }
 
 
