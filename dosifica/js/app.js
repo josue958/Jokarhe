@@ -2668,14 +2668,100 @@ document.getElementById('pda-detail-form').addEventListener('submit', (e) => {
     showToast('Detalles guardados en la fila. ¡No olvides Guardar Cambios en la tabla principal!', 'success');
 });
 
-// IMPORTANTE: Coloca aquí tu clave API de Gemini
-const GEMINI_API_KEY = "AQ.Ab8RN6J9Cxu1ROOwyWabQxj1rdEnZVBB0pLxvoPO2KgynMPBlQ";
+// =========================================================
+// GESTOR DINÁMICO DE API KEY DE GOOGLE GEMINI
+// =========================================================
+function getGeminiApiKey() {
+    let key = (localStorage.getItem('jokarhe_gemini_api_key') || '').trim();
+    if (key && key !== 'AQUI_VA_TU_CLAVE') return key;
+    return '';
+}
+
+function saveGeminiApiKey() {
+    const input = document.getElementById('ai-gemini-key-input');
+    if (!input) return;
+    const val = input.value.trim();
+    if (!val) {
+        showToast('Por favor introduce tu clave de API de Gemini.', 'warning');
+        return;
+    }
+    if (!val.startsWith('AIzaSy')) {
+        showToast('Aviso: Las claves oficiales de Google Gemini suelen iniciar con "AIzaSy...". Asegúrate de que sea correcta.', 'warning');
+    }
+    localStorage.setItem('jokarhe_gemini_api_key', val);
+    updateGeminiKeyStatusUI();
+    showToast('✅ Clave de API de Gemini guardada correctamente.', 'success');
+}
+
+function toggleGeminiKeyVisibility() {
+    const input = document.getElementById('ai-gemini-key-input');
+    if (!input) return;
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+async function testGeminiApiKey() {
+    const key = document.getElementById('ai-gemini-key-input')?.value.trim() || getGeminiApiKey();
+    if (!key) {
+        showToast('Primero ingresa una clave de API de Gemini.', 'warning');
+        return;
+    }
+    showToast('Probando conexión con Google Gemini...', 'info');
+    try {
+        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=' + key, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: "Responde únicamente con la palabra OK." }] }]
+            })
+        });
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.error?.message || response.statusText);
+        }
+
+        const data = await response.json();
+        const txt = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
+        showToast(`✅ Conexión exitosa con Google Gemini: ${txt}`, 'success');
+        updateGeminiKeyStatusUI(true);
+    } catch (e) {
+        showToast(`❌ Error de conexión con Gemini: ${e.message}`, 'error');
+        updateGeminiKeyStatusUI(false, e.message);
+    }
+}
+
+function updateGeminiKeyStatusUI(isSuccess = null, errMsg = null) {
+    const statusMsg = document.getElementById('ai-key-status-msg');
+    const input = document.getElementById('ai-gemini-key-input');
+    const key = getGeminiApiKey();
+
+    if (input && !input.value && key) {
+        input.value = key;
+    }
+
+    if (!statusMsg) return;
+
+    if (isSuccess === true) {
+        statusMsg.innerHTML = '🟢 Estado: Conexión activa y funcionando con Google Gemini.';
+        statusMsg.style.color = '#86efac';
+    } else if (isSuccess === false) {
+        statusMsg.innerHTML = `🔴 Estado: Error de autenticación (${errMsg || 'Clave no válida'}). Obtén una en Google AI Studio.`;
+        statusMsg.style.color = '#fca5a5';
+    } else if (key) {
+        statusMsg.innerHTML = '🟢 Clave de API configurada en este navegador. Haz clic en "🧪 Probar Conexión" para validarla.';
+        statusMsg.style.color = '#86efac';
+    } else {
+        statusMsg.innerHTML = '⚠️ No hay clave configurada. Haz clic en "Obtener API Key Gratis" para generar una en Google AI Studio.';
+        statusMsg.style.color = '#fef08a';
+    }
+}
 
 async function generateWithGeminiAI() {
     if (!currentPdaDetailRow || !activePlaneacionId) return;
-    const apiKey = GEMINI_API_KEY;
-    if (!apiKey || apiKey === "AQUI_VA_TU_CLAVE") {
-        showToast('Error: Debes colocar tu API Key válida.', 'error');
+    const apiKey = getGeminiApiKey();
+    if (!apiKey) {
+        showToast('Error: Debes ingresar tu API Key de Google Gemini en la pestaña 🤖 Configuración IA.', 'error');
+        if (typeof switchTab === 'function') switchTab('tab-ia');
         return;
     }
 
@@ -2872,9 +2958,10 @@ Debes responder ESTRICTAMENTE con un objeto JSON válido con la siguiente estruc
 
 document.getElementById('bulk-pda-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const apiKey = GEMINI_API_KEY;
-    if (!apiKey || apiKey === "AQUI_VA_TU_CLAVE") {
-        showToast('Error: Debes colocar tu API Key válida.', 'error');
+    const apiKey = getGeminiApiKey();
+    if (!apiKey) {
+        showToast('Error: Debes ingresar tu API Key de Google Gemini en la pestaña 🤖 Configuración IA.', 'error');
+        if (typeof switchTab === 'function') switchTab('tab-ia');
         return;
     }
 
@@ -3137,6 +3224,7 @@ function renderAIPanel() {
         }
     }
     updateAISaveButtonsState(false);
+    updateGeminiKeyStatusUI();
 }
 
 function initSettingsPanel() {
@@ -3259,15 +3347,44 @@ function populateDisciplinesSelect() {
 async function calculatePdaSessions() {
     if (!activePlaneacionId) return;
 
-    const totalSessions = parseInt(document.getElementById('summary-total-sessions').innerText) || 0;
     const rows = document.querySelectorAll('#planner-tbody tr');
-    if (!rows.length || totalSessions <= 0) return;
-
-    const apiKey = GEMINI_API_KEY;
-    if (!apiKey || apiKey === "AQUI_VA_TU_CLAVE") {
-        showToast('Error: Debes colocar tu API Key válida.', 'error');
+    if (!rows.length) {
+        showToast('No hay filas de PDA en el planificador.', 'warning');
         return;
     }
+
+    const apiKey = getGeminiApiKey();
+    if (!apiKey) {
+        showToast('Error: Debes ingresar tu API Key de Google Gemini en la pestaña 🤖 Configuración IA.', 'error');
+        if (typeof switchTab === 'function') switchTab('tab-ia');
+        return;
+    }
+
+    const plans = dbQuery(`
+        SELECT p.*, c.start_date as cycle_start, c.total_days, c.period1_days, c.period2_days, c.holidays 
+        FROM planeaciones p 
+        JOIN school_cycles c ON p.cycle_id = c.id 
+        WHERE p.id = ?
+    `, [activePlaneacionId]);
+
+    if (!plans.length) {
+        showToast('Error: No se encontró la planeación activa.', 'error');
+        return;
+    }
+    const plan = plans[0];
+
+    // Obtener totalSessions de forma robusta
+    let totalSessions = 0;
+    try {
+        const holidays = JSON.parse(plan.holidays || '{}');
+        const schoolDays = calculateSchoolDays(plan.cycle_start, plan.total_days, holidays);
+        const schedule = JSON.parse(plan.schedule || '{}');
+        const sessions = mapSessions(schoolDays, schedule, plan.period1_days, plan.period2_days);
+        totalSessions = sessions.length;
+    } catch (e) {
+        totalSessions = parseInt(document.getElementById('summary-total-sessions')?.innerText) || 0;
+    }
+    if (totalSessions <= 0) totalSessions = parseInt(document.getElementById('summary-total-sessions')?.innerText) || 190;
 
     const btn = document.getElementById('planner-btn-calc-sessions');
     if (btn) {
@@ -3279,18 +3396,18 @@ async function calculatePdaSessions() {
     let activeRowsData = [];
     let rowData = [];
 
+    // Evaluar filas fijadas
     rows.forEach((row, index) => {
         const cb = row.querySelector('.skip-sesiones-cb');
         const currentVal = parseInt(row.querySelector('.pda-sessions').value) || 0;
         const isSkipped = cb && cb.checked;
         const pdaNum = index + 1;
 
-        // Si la fila está marcada como 'Listo' pero tiene 0 sesiones o está vacía, se incluye obligatoriamente para recalcular
         if (isSkipped && currentVal > 0) {
             remainingSessions -= currentVal;
             rowData.push({ row, isSkipped: true, fixed: currentVal, pdaNum });
         } else {
-            if (cb) cb.checked = false; // Desmarcar casilla para recalcular y no dejar en 0
+            if (cb) cb.checked = false;
             const contenido = row.querySelector('.pda-contenido').value.trim();
             const topic = row.querySelector('.pda-topic').value.trim();
             const verbo = row.querySelector('.pda-verb').value.trim();
@@ -3302,18 +3419,27 @@ async function calculatePdaSessions() {
         }
     });
 
-    if (remainingSessions < 0) remainingSessions = 0;
+    // Si todas las filas estaban fijadas o el remanente no alcanza para dar al menos 1 sesión por PDA activo,
+    // se recalcula la totalidad de la planeación
+    if (activeRowsData.length === 0 || remainingSessions < activeRowsData.length) {
+        remainingSessions = totalSessions;
+        activeRowsData = [];
+        rowData = [];
 
-    if (activeRowsData.length === 0 || remainingSessions === 0) {
-        if (btn) {
-            btn.disabled = false;
-            btn.innerText = "🤖 Calcular Sesiones";
-        }
-        return;
+        rows.forEach((row, index) => {
+            const cb = row.querySelector('.skip-sesiones-cb');
+            if (cb) cb.checked = false;
+            const pdaNum = index + 1;
+            const contenido = row.querySelector('.pda-contenido').value.trim();
+            const topic = row.querySelector('.pda-topic').value.trim();
+            const verbo = row.querySelector('.pda-verb').value.trim();
+            const complejidad = row.querySelector('.pda-complejidad').value.trim();
+            const rango = row.querySelector('.pda-rango').value.trim();
+
+            activeRowsData.push({ pdaNum, contenido, topic, verbo, complejidad, rango });
+            rowData.push({ row, isSkipped: false, fixed: 0, pdaNum });
+        });
     }
-
-    const plans = dbQuery("SELECT * FROM planeaciones WHERE id = ?", [activePlaneacionId]);
-    const plan = plans[0];
 
     const templatePrompt = getAIInstruction('btn_sesiones');
     const promptText = templatePrompt
@@ -3332,11 +3458,19 @@ async function calculatePdaSessions() {
             })
         });
 
-        if (!response.ok) throw new Error('Error en la respuesta de la API de Gemini');
+        if (!response.ok) {
+            const errJson = await response.json().catch(() => ({}));
+            throw new Error('Error en la API de Gemini: ' + (errJson.error?.message || response.statusText));
+        }
 
         const result = await response.json();
-        const content = result.candidates[0].content.parts[0].text;
-        const data = JSON.parse(content);
+        let rawContent = result.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        rawContent = rawContent.trim();
+        if (rawContent.startsWith('```')) {
+            rawContent = rawContent.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+        }
+
+        const data = JSON.parse(rawContent);
         let distribucion = data.distribucion || [];
 
         // Validar y ajustar matemáticamente garantizando que NINGUNA fila quede en 0 (Mínimo 1 sesión)
@@ -3398,7 +3532,12 @@ async function calculatePdaSessions() {
         rowData.forEach(rd => {
             if (!rd.isSkipped) {
                 let s = pdaMap[rd.pdaNum] || 1;
-                rd.row.querySelector('.pda-sessions').value = s;
+                const input = rd.row.querySelector('.pda-sessions');
+                if (input) {
+                    input.value = s;
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                }
                 const cb = rd.row.querySelector('.skip-sesiones-cb');
                 if (cb) cb.checked = true;
             }
@@ -3529,9 +3668,10 @@ function startAICountdown() {
 
 async function runGeminiBulkPrompt(promptTemplateFn, buttonId, buttonOriginalText, updateRowFn, skipCheckFn = null) {
     if (!activePlaneacionId) return;
-    const apiKey = GEMINI_API_KEY;
-    if (!apiKey || apiKey === "AQUI_VA_TU_CLAVE") {
-        showToast('Error: Debes colocar tu API Key válida.', 'error');
+    const apiKey = getGeminiApiKey();
+    if (!apiKey) {
+        showToast('Error: Debes ingresar tu API Key de Google Gemini en la pestaña 🤖 Configuración IA.', 'error');
+        if (typeof switchTab === 'function') switchTab('tab-ia');
         return;
     }
 

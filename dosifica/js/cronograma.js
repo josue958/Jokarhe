@@ -95,7 +95,7 @@ function renderCronogramaEscolar(selectedPlanId = null) {
 
         const plan = plans[0];
         const pdas = dbQuery("SELECT * FROM planeacion_pdas WHERE planeacion_id = ? ORDER BY pda_number ASC", [planId]);
-        
+
         const pdasWithDates = pdas.filter(p => p.start_date && p.end_date && p.start_date.trim() !== '' && p.end_date.trim() !== '');
         const hasDates = pdasWithDates.length > 0;
 
@@ -111,13 +111,13 @@ function renderCronogramaEscolar(selectedPlanId = null) {
         // Renderizar Calendario Trimestral de Días Hábiles del Ciclo
         const rawHolidays = JSON.parse(plan.holidays || '{}');
         const holidaysMap = {};
-        
+
         // Mapear todas las variantes de formato de fecha (DD-MM-YYYY, YYYY-MM-DD, con/sin ceros)
         for (const [k, v] of Object.entries(rawHolidays)) {
             if (!k || !v) continue;
             const cleanKey = k.trim();
             holidaysMap[cleanKey] = v;
-            
+
             if (/^\d{1,2}-\d{1,2}-\d{4}$/.test(cleanKey)) {
                 const [d, m, y] = cleanKey.split('-');
                 const dPad = String(parseInt(d)).padStart(2, '0');
@@ -189,9 +189,9 @@ function renderCronogramaEscolar(selectedPlanId = null) {
         }
 
         const trimesters = [
-            { name: "TRIMESTRE 1", months: [ {name: "AGOSTO", m: 7}, {name: "SEPTIEMBRE", m: 8}, {name: "OCTUBRE", m: 9}, {name: "NOVIEMBRE", m: 10} ] },
-            { name: "TRIMESTRE 2", months: [ {name: "DICIEMBRE", m: 11}, {name: "ENERO", m: 0}, {name: "FEBRERO", m: 1}, {name: "MARZO", m: 2} ] },
-            { name: "TRIMESTRE 3", months: [ {name: "ABRIL", m: 3}, {name: "MAYO", m: 4}, {name: "JUNIO", m: 5}, {name: "JULIO", m: 6} ] }
+            { name: "TRIMESTRE 1", months: [{ name: "AGOSTO", m: 7 }, { name: "SEPTIEMBRE", m: 8 }, { name: "OCTUBRE", m: 9 }, { name: "NOVIEMBRE", m: 10 }] },
+            { name: "TRIMESTRE 2", months: [{ name: "DICIEMBRE", m: 11 }, { name: "ENERO", m: 0 }, { name: "FEBRERO", m: 1 }, { name: "MARZO", m: 2 }] },
+            { name: "TRIMESTRE 3", months: [{ name: "ABRIL", m: 3 }, { name: "MAYO", m: 4 }, { name: "JUNIO", m: 5 }, { name: "JULIO", m: 6 }] }
         ];
 
         const activeLegends = (typeof getCronoLegends === 'function') ? getCronoLegends() : DEFAULT_CRONO_LEGENDS;
@@ -202,39 +202,41 @@ function renderCronogramaEscolar(selectedPlanId = null) {
                 <div class="crono-legend" style="margin-bottom: 16px;">
                     <span class="crono-legend-title">Leyenda del Cronograma:</span>
                     ${activeLegends.map(leg => {
-                        return `<div class="crono-legend-item"><div class="crono-legend-color" style="background: ${leg.color}; border-color: ${leg.color};"></div><span>${leg.icon} ${htmlspecialchars(leg.name)}</span></div>`;
-                    }).join('')}
-                    <div class="crono-legend-item" style="border-left: 2px solid #e2e8f0; padding-left: 8px;"><span class="crono-legend-title">Estado PDAs:</span></div>
+            return `<div class="crono-legend-item"><div class="crono-legend-color" style="background: ${leg.color}; border-color: ${leg.color};"></div><span>${leg.icon} ${htmlspecialchars(leg.name)}</span></div>`;
+        }).join('')}
+                    <div class="crono-legend-item" style="border-left: 2px solid #e2e8f0; padding-left: 8px;"></div>  
+                    
+                </div>
+                <div class="crono-legend" style="margin-bottom: 16px;"> <span class="crono-legend-title">Estado PDAs:</span>
                     <div class="crono-legend-item"><span style="color: #166534; font-weight: 700;">✅ Sesiones Cubiertas</span></div>
                     <div class="crono-legend-item"><span style="color: #d97706; font-weight: 700;">⚠️ Sesiones Faltantes/Excedidas</span></div>
                     <div class="crono-legend-item"><span style="color: #dc2626; font-weight: 700;">⚠️ Choca con Inhábil / Error Fechas</span></div>
                 </div>
-
                 <div class="crono-tabs-header">
-                    ${trimesters.map((t, i) => `<button class="crono-tab-btn ${i===0?'active':''}" onclick="switchCronoTab(${i}, this)">${t.name}</button>`).join('')}
+                    ${trimesters.map((t, i) => `<button class="crono-tab-btn ${i === 0 ? 'active' : ''}" onclick="switchCronoTab(${i}, this)">${t.name}</button>`).join('')}
                 </div>
                 
                 <div class="crono-trimesters-container">
         `;
 
         trimesters.forEach((t, tIndex) => {
-            html += `<div id="crono-trim-${tIndex}" class="crono-trimester-content ${tIndex===0?'active':''}">`;
-            
+            html += `<div id="crono-trim-${tIndex}" class="crono-trimester-content ${tIndex === 0 ? 'active' : ''}">`;
+
             t.months.forEach(monthObj => {
                 const year = monthObj.m >= 7 ? startYear : startYear + 1;
                 const daysInMonth = new Date(year, monthObj.m + 1, 0).getDate();
                 const weekdays = [];
-                for(let d=1; d<=daysInMonth; d++) {
+                for (let d = 1; d <= daysInMonth; d++) {
                     const date = new Date(year, monthObj.m, d);
                     const wd = date.getDay();
-                    if(wd >= 1 && wd <= 5) {
-                        const dateStrIso = `${year}-${String(monthObj.m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                        const dateStrDmy = `${String(d).padStart(2,'0')}-${String(monthObj.m+1).padStart(2,'0')}-${year}`;
+                    if (wd >= 1 && wd <= 5) {
+                        const dateStrIso = `${year}-${String(monthObj.m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                        const dateStrDmy = `${String(d).padStart(2, '0')}-${String(monthObj.m + 1).padStart(2, '0')}-${year}`;
                         const event = holidaysMap[dateStrIso] || holidaysMap[dateStrDmy] || null;
 
-                        weekdays.push({ 
-                            day: d, 
-                            letter: ['D','L','M','M','J','V','S'][wd],
+                        weekdays.push({
+                            day: d,
+                            letter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'][wd],
                             wdNum: wd,
                             dateStr: dateStrIso,
                             dateStrDmy: dateStrDmy,
@@ -243,7 +245,7 @@ function renderCronogramaEscolar(selectedPlanId = null) {
                         });
                     }
                 }
-                
+
                 html += `
                     <div class="crono-month-card">
                         <div class="crono-month-header" style="display:flex; justify-content:space-between; align-items:center;">
@@ -255,18 +257,18 @@ function renderCronogramaEscolar(selectedPlanId = null) {
                                 <tr>
                                     <th>MES</th>
                                     ${weekdays.map(wd => {
-                                        const cat = (typeof getHolidayCategoryInfo === 'function') ? getHolidayCategoryInfo(wd.event) : null;
-                                        const thStyle = (wd.event && cat) ? `background: ${cat.headerBg}; color: ${cat.headerColor}; font-weight: 700;` : '';
-                                        return `<th style="${thStyle}" title="${wd.event ? htmlspecialchars(wd.event) : ''}">${wd.letter}</th>`;
-                                    }).join('')}
+                    const cat = (typeof getHolidayCategoryInfo === 'function') ? getHolidayCategoryInfo(wd.event) : null;
+                    const thStyle = (wd.event && cat) ? `background: ${cat.headerBg}; color: ${cat.headerColor}; font-weight: 700;` : '';
+                    return `<th style="${thStyle}" title="${wd.event ? htmlspecialchars(wd.event) : ''}">${wd.letter}</th>`;
+                }).join('')}
                                 </tr>
                                 <tr>
                                     <th>${monthObj.name} ${year}</th>
                                     ${weekdays.map(wd => {
-                                        const cat = (typeof getHolidayCategoryInfo === 'function') ? getHolidayCategoryInfo(wd.event) : null;
-                                        const thStyle = (wd.event && cat) ? `background: ${cat.headerBg}; color: ${cat.headerColor}; font-weight: 800;` : '';
-                                        return `<th style="${thStyle}" title="${wd.event ? htmlspecialchars(wd.event) : ''}">${wd.day}</th>`;
-                                    }).join('')}
+                    const cat = (typeof getHolidayCategoryInfo === 'function') ? getHolidayCategoryInfo(wd.event) : null;
+                    const thStyle = (wd.event && cat) ? `background: ${cat.headerBg}; color: ${cat.headerColor}; font-weight: 800;` : '';
+                    return `<th style="${thStyle}" title="${wd.event ? htmlspecialchars(wd.event) : ''}">${wd.day}</th>`;
+                }).join('')}
                                 </tr>
                                 <tr>
                                     <th>ACTIVIDADES Y SEGUIMIENTO</th>
@@ -287,11 +289,11 @@ function renderCronogramaEscolar(selectedPlanId = null) {
             });
             html += `</div>`;
         });
-        
+
         html += `</div></div>`;
         container.innerHTML = html;
-        
-    } catch(e) {
+
+    } catch (e) {
         container.innerHTML = `<div class="alert alert-error">Error al renderizar cronograma: ${e.message}</div>`;
         console.error(e);
     }
@@ -557,7 +559,7 @@ function generatePdasRowHtml(weekdays, pdas, pdaAnalysisMap) {
             if (currentPdaNum) {
                 const analysis = pdaAnalysisMap[currentPdaNum];
                 const pda = analysis ? analysis.pda : pdas.find(p => p.pda_number === currentPdaNum);
-                
+
                 let cellStyle = 'background: rgba(16, 185, 129, 0.16); color: #065f46; border: 1px solid #10b981; font-weight: 700;';
                 let tagText = `✅ PDA ${currentPdaNum} (${analysis ? analysis.actualSessions : pda.sessions_count}/${pda.sessions_count} ses)`;
 
@@ -609,7 +611,7 @@ function openPlannerFromCrono(planId) {
 function switchCronoTab(index, btn) {
     document.querySelectorAll('.crono-tabs-header .crono-tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
+
     document.querySelectorAll('.crono-trimester-content').forEach(c => c.classList.remove('active'));
     const target = document.getElementById(`crono-trim-${index}`);
     if (target) target.classList.add('active');
@@ -619,7 +621,7 @@ function generateEventsRowHtml(weekdays) {
     let html = '';
     let currentEvent = null;
     let colspan = 0;
-    
+
     const flushEvent = () => {
         if (colspan > 0) {
             if (currentEvent) {
@@ -630,7 +632,7 @@ function generateEventsRowHtml(weekdays) {
             }
         }
     };
-    
+
     weekdays.forEach(wd => {
         if (wd.event !== currentEvent) {
             flushEvent();
@@ -641,7 +643,7 @@ function generateEventsRowHtml(weekdays) {
         }
     });
     flushEvent();
-    
+
     return html;
 }
 
@@ -725,9 +727,9 @@ async function exportCronogramaExcel(selectedPlanId = null) {
         }
 
         const trimesters = [
-            { name: "TRIMESTRE 1", subtitle: "AGOSTO - NOVIEMBRE", months: [ {name: "AGOSTO", m: 7}, {name: "SEPTIEMBRE", m: 8}, {name: "OCTUBRE", m: 9}, {name: "NOVIEMBRE", m: 10} ] },
-            { name: "TRIMESTRE 2", subtitle: "DICIEMBRE - MARZO", months: [ {name: "DICIEMBRE", m: 11}, {name: "ENERO", m: 0}, {name: "FEBRERO", m: 1}, {name: "MARZO", m: 2} ] },
-            { name: "TRIMESTRE 3", subtitle: "ABRIL - JULIO", months: [ {name: "ABRIL", m: 3}, {name: "MAYO", m: 4}, {name: "JUNIO", m: 5}, {name: "JULIO", m: 6} ] }
+            { name: "TRIMESTRE 1", subtitle: "AGOSTO - NOVIEMBRE", months: [{ name: "AGOSTO", m: 7 }, { name: "SEPTIEMBRE", m: 8 }, { name: "OCTUBRE", m: 9 }, { name: "NOVIEMBRE", m: 10 }] },
+            { name: "TRIMESTRE 2", subtitle: "DICIEMBRE - MARZO", months: [{ name: "DICIEMBRE", m: 11 }, { name: "ENERO", m: 0 }, { name: "FEBRERO", m: 1 }, { name: "MARZO", m: 2 }] },
+            { name: "TRIMESTRE 3", subtitle: "ABRIL - JULIO", months: [{ name: "ABRIL", m: 3 }, { name: "MAYO", m: 4 }, { name: "JUNIO", m: 5 }, { name: "JULIO", m: 6 }] }
         ];
 
         const activeLegends = (typeof getCronoLegends === 'function') ? getCronoLegends() : DEFAULT_CRONO_LEGENDS;
@@ -825,13 +827,13 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                     const date = new Date(year, monthObj.m, d);
                     const wd = date.getDay();
                     if (wd >= 1 && wd <= 5) {
-                        const dateStrIso = `${year}-${String(monthObj.m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                        const dateStrDmy = `${String(d).padStart(2,'0')}-${String(monthObj.m+1).padStart(2,'0')}-${year}`;
+                        const dateStrIso = `${year}-${String(monthObj.m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                        const dateStrDmy = `${String(d).padStart(2, '0')}-${String(monthObj.m + 1).padStart(2, '0')}-${year}`;
                         const event = holidaysMap[dateStrIso] || holidaysMap[dateStrDmy] || null;
 
                         weekdays.push({
                             day: d,
-                            letter: ['D','L','M','M','J','V','S'][wd],
+                            letter: ['D', 'L', 'M', 'M', 'J', 'V', 'S'][wd],
                             wdNum: wd,
                             dateStr: dateStrIso,
                             dateStrDmy: dateStrDmy,
@@ -861,7 +863,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 rowMes.getCell(1).font = { name: 'Calibri', size: 10, bold: true, color: { argb: 'FF0A203E' } };
                 rowMes.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
                 rowMes.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
-                rowMes.getCell(1).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                rowMes.getCell(1).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
 
                 weekdays.forEach((wd, i) => {
                     const cell = rowMes.getCell(2 + i);
@@ -875,7 +877,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF8FAFC' } };
                     }
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    cell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                    cell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 });
                 currentRow++;
 
@@ -886,7 +888,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 rowNum.getCell(1).font = { name: 'Calibri', size: 9, bold: true, color: { argb: 'FF0A203E' } };
                 rowNum.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
                 rowNum.getCell(1).alignment = { vertical: 'middle', horizontal: 'center' };
-                rowNum.getCell(1).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                rowNum.getCell(1).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
 
                 weekdays.forEach((wd, i) => {
                     const cell = rowNum.getCell(2 + i);
@@ -900,7 +902,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } };
                     }
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    cell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                    cell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 });
                 currentRow++;
 
@@ -911,7 +913,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 rowEvent.getCell(1).font = { name: 'Calibri', size: 9, bold: true, color: { argb: 'FF0A203E' } };
                 rowEvent.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
                 rowEvent.getCell(1).alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-                rowEvent.getCell(1).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                rowEvent.getCell(1).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
 
                 let curEvt = null;
                 let evtStartCol = 2;
@@ -931,7 +933,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         for (let c = evtStartCol; c <= endCol; c++) {
                             const emptyCell = rowEvent.getCell(c);
                             emptyCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } };
-                            emptyCell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                            emptyCell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                         }
                     }
                 };
@@ -943,7 +945,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         curEvt = wd.event;
                         evtStartCol = colIdx;
                     }
-                    rowEvent.getCell(colIdx).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                    rowEvent.getCell(colIdx).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 });
                 flushExcelEvent(1 + totalDaysCols);
                 currentRow++;
@@ -955,7 +957,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 rowSess.getCell(1).font = { name: 'Calibri', size: 9, bold: true, color: { argb: 'FF0A203E' } };
                 rowSess.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
                 rowSess.getCell(1).alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-                rowSess.getCell(1).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                rowSess.getCell(1).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
 
                 weekdays.forEach((wd, i) => {
                     const cell = rowSess.getCell(2 + i);
@@ -985,7 +987,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         }
                     }
                     cell.alignment = { vertical: 'middle', horizontal: 'center' };
-                    cell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                    cell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 });
                 currentRow++;
 
@@ -996,7 +998,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 rowPda.getCell(1).font = { name: 'Calibri', size: 9, bold: true, color: { argb: 'FF0A203E' } };
                 rowPda.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
                 rowPda.getCell(1).alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-                rowPda.getCell(1).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                rowPda.getCell(1).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
 
                 const findActivePdaForDayExcel = (dateObj) => {
                     const dTime = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()).getTime();
@@ -1061,7 +1063,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         for (let c = pdaStartCol; c <= endCol; c++) {
                             const emptyCell = rowPda.getCell(c);
                             emptyCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } };
-                            emptyCell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                            emptyCell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                         }
                     }
                 };
@@ -1076,7 +1078,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                         curPdaNum = pNum;
                         pdaStartCol = colIdx;
                     }
-                    rowPda.getCell(colIdx).border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                    rowPda.getCell(colIdx).border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 });
                 flushExcelPda(1 + totalDaysCols);
                 currentRow += 2;
@@ -1119,7 +1121,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
             cell.font = { name: 'Calibri', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
             cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1178C2' } };
             cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
-            cell.border = { top: {style:'medium',color:{argb:'FF0A203E'}}, bottom: {style:'medium',color:{argb:'FF0A203E'}}, left: {style:'thin',color:{argb:'FFFFFFFF'}}, right: {style:'thin',color:{argb:'FFFFFFFF'}} };
+            cell.border = { top: { style: 'medium', color: { argb: 'FF0A203E' } }, bottom: { style: 'medium', color: { argb: 'FF0A203E' } }, left: { style: 'thin', color: { argb: 'FFFFFFFF' } }, right: { style: 'thin', color: { argb: 'FFFFFFFF' } } };
         });
 
         let curContenido = null;
@@ -1145,7 +1147,7 @@ async function exportCronogramaExcel(selectedPlanId = null) {
                 const cell = row.getCell(c);
                 cell.font = { name: 'Calibri', size: 10, color: { argb: 'FF0F172A' } };
                 cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: rowBg } };
-                cell.border = { top: {style:'thin',color:{argb:'FFCBD5E1'}}, bottom: {style:'thin',color:{argb:'FFCBD5E1'}}, left: {style:'thin',color:{argb:'FFCBD5E1'}}, right: {style:'thin',color:{argb:'FFCBD5E1'}} };
+                cell.border = { top: { style: 'thin', color: { argb: 'FFCBD5E1' } }, bottom: { style: 'thin', color: { argb: 'FFCBD5E1' } }, left: { style: 'thin', color: { argb: 'FFCBD5E1' } }, right: { style: 'thin', color: { argb: 'FFCBD5E1' } } };
                 cell.alignment = {
                     vertical: 'middle',
                     horizontal: (c === 2 || c === 5 || c === 6 || c === 7 || c === 8 || c === 9 || c === 10) ? 'center' : 'left',

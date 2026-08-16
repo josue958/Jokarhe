@@ -45,11 +45,15 @@
   - `jokarhe_bulk_profile`: Almacena el perfil estático (nombre de escuela, maestro) para el modal de Generación Masiva.
   - `planner_column_widths`: Guarda en caché las anchuras exactas redimensionadas manualmente por el usuario.
 - **Protección de Datos (Casillas "Listo")**: Cada celda generada dinámicamente contiene un `input[type=checkbox]` debajo (`.skip-temas-cb`, `.skip-sesiones-cb`, etc.). Al procesar respuestas en masa (Bulk Generation o "Calcular Sesiones"), el sistema verifica si esta casilla está marcada. Si lo está, OMITE la fila para no sobrescribir el trabajo del usuario.
-- **Ajuste Matemático y Reglas de Cálculo de Sesiones por IA (`calculateSessionsWithAI`)**:
+- **Ajuste Matemático y Reglas de Cálculo de Sesiones por IA (`calculateSessionsWithAI` / `calculatePdaSessions`)**:
   1. *Regla Inquebrantable de Mínimo 1 Sesión*: Ningún PDA activo puede quedar con 0 sesiones. El valor mínimo asignable es 1 sesión.
   2. *Recálculo Automático de Filas en Cero*: Si una fila tenía 0 sesiones o estaba marcada como 'Listo' pero vacía/cero, el sistema desmarca la casilla y la re-incluye automáticamente en la distribución para ser recalculada y ajustada según la complejidad y el verbo rector.
-  3. *Balance Exacto*: El algoritmo iterativo distribuye o descuenta el remanente garantizando que la suma cuadre de forma exacta con `totalSessions` sin reducir nunca ningún PDA por debajo de 1.
-- **Validación de API Key**: Ya no usamos `.includes()` para revisar la cadena de la API KEY, pues causaba colisiones. Solo se evalúa si está vacía o si es textualmente la de fábrica (`AQUI_VA_TU_CLAVE`).
+  3. *Regeneración Total*: Si todas las filas estaban fijadas/marcadas como listas o el remanente no alcanzaba para cubrir al menos 1 sesión por fila, el sistema desmarca automáticamente todas las casillas y recalcula la distribución completa sobre el total oficial de sesiones (`totalSessions`).
+  4. *Balance Exacto y Sanitización JSON*: El algoritmo iterativo distribuye o descuenta el remanente garantizando que la suma cuadre de forma exacta con `totalSessions` sin reducir nunca ningún PDA por debajo de 1, limpiando bloques markdown (````json```) en la respuesta del modelo.
+- **Gestión Dinámica de API Key de Google Gemini (`TAB 5: CONFIGURACIÓN IA`)**:
+  - Se incorporó un panel interactivo al inicio de la pestaña de IA para ingresar, mostrar/ocultar y guardar de forma persistente la clave de API de Gemini (`localStorage.jokarhe_gemini_api_key`).
+  - Incluye botón directo a **Google AI Studio** para generar claves gratuitas (que inician con `AIzaSy...`), botón **"🧪 Probar Conexión"** para validar en tiempo real el estado con los servidores de Google y diagnóstico de estado visual (`🟢 Activa / 🔴 Error`).
+  - Si la clave está ausente o es rechazada, las funciones de IA redirigen al usuario con un Toast explicativo a la pestaña de configuración.
 - **Formato Institucional en Documentos Word (.docx)**:
   - *Nombre de Escuela*: En el encabezado del archivo de Word, si el campo está vacío o solo contiene el nombre/número (ej. `Ingeniero Bravo Ahuja`), se formatea automáticamente como `Escuela Secundaria Técnica No. "Ingeniero Bravo Ahuja"` o `Escuela Secundaria Técnica No. " "` si está en blanco.
   - *Ciclo Escolar*: Se previene cualquier duplicación accidental de prefijos (como `Ciclo Escolar Ciclo Escolar 2026-2027`), asegurando una única leyenda limpia: `Ciclo Escolar 2026-2027`.
