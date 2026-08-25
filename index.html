@@ -566,9 +566,61 @@
         }
 
         /* Pricing */
+        .pricing-switcher-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .pricing-switcher {
+            display: inline-flex;
+            background: var(--core-surface-alt);
+            border: 1px solid var(--core-border);
+            border-radius: 30px;
+            padding: 5px;
+            gap: 6px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .period-btn {
+            background: transparent;
+            border: none;
+            color: var(--core-text-muted);
+            font-weight: 700;
+            padding: 9px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: .88rem;
+            transition: all 0.25s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .period-btn:hover {
+            color: var(--core-text);
+        }
+
+        .period-btn.active {
+            background: var(--core-cyan);
+            color: #042030;
+            box-shadow: 0 4px 14px rgba(0, 184, 216, 0.35);
+        }
+
+        .save-tag {
+            background: var(--core-green);
+            color: #062c1d;
+            font-size: .72rem;
+            font-weight: 800;
+            padding: 2px 7px;
+            border-radius: 8px;
+        }
+
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(4,1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
             align-items: stretch;
         }
@@ -577,7 +629,7 @@
             background: var(--core-surface);
             border: 1px solid var(--core-border);
             border-radius: 20px;
-            padding: 30px 24px;
+            padding: 30px 22px;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -587,7 +639,7 @@
 
         .price-card.featured {
             border: 2px solid var(--core-cyan);
-            box-shadow: 0 20px 55px rgba(0,184,216,.18);
+            box-shadow: 0 20px 55px rgba(0, 184, 216, 0.18);
             transform: translateY(-8px);
         }
 
@@ -597,62 +649,144 @@
             left: 50%;
             transform: translateX(-50%);
             background: var(--core-cyan);
-            color: white;
+            color: #042030;
             padding: 5px 14px;
             border-radius: 20px;
             font-size: .72rem;
             font-weight: 800;
             white-space: nowrap;
+            letter-spacing: 0.5px;
         }
 
         .price-name {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--core-text);
         }
 
         .price-description {
             color: var(--core-text-muted);
-            font-size: .87rem;
-            min-height: 45px;
+            font-size: .86rem;
+            min-height: 42px;
+            line-height: 1.45;
+        }
+
+        .price-box {
+            margin: 18px 0 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--core-border);
+        }
+
+        .price-val {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .price-amount {
+            font-size: 2.3rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--core-text);
+            letter-spacing: -1px;
+        }
+
+        .price-currency {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--core-text-muted);
+        }
+
+        .price-cycle {
+            font-size: .85rem;
+            color: var(--core-text-muted);
+            font-weight: 600;
+        }
+
+        .price-sub-equiv {
+            margin-top: 8px;
+            font-size: .76rem;
+            font-weight: 700;
+            color: var(--core-green);
+            display: inline-block;
+            background: rgba(24, 199, 122, .12);
+            padding: 3px 8px;
+            border-radius: 6px;
         }
 
         .price-list {
             list-style: none;
             padding: 0;
-            margin: 25px 0;
+            margin: 15px 0 20px;
             flex: 1;
         }
 
         .price-list li {
-            padding: 8px 0;
-            font-size: .9rem;
+            padding: 7px 0;
+            font-size: .88rem;
             display: flex;
             gap: 8px;
             color: var(--core-text);
+            line-height: 1.4;
         }
 
         .price-list li::before {
             content: "✓";
             color: var(--core-green);
             font-weight: 900;
+            flex-shrink: 0;
         }
 
         .price-limit {
-            padding: 12px;
+            padding: 10px 12px;
             border-radius: 10px;
             background: var(--core-surface-alt);
             color: var(--core-text);
             border: 1px solid var(--core-border);
-            font-size: .85rem;
-            margin-bottom: 20px;
+            font-size: .82rem;
+            margin-bottom: 18px;
             font-weight: 700;
+            text-align: center;
         }
 
         .price-btn {
             width: 100%;
             text-align: center;
+            padding: 12px;
+        }
+
+        /* Teacher support banner */
+        .teacher-support-banner {
+            max-width: 950px;
+            margin: 40px auto 0;
+            padding: 22px 28px;
+            background: var(--core-surface-alt);
+            border: 1px solid var(--core-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--core-card-shadow);
+        }
+
+        .teacher-support-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .teacher-support-banner h4 {
+            font-size: 1.08rem;
+            margin: 0 0 6px;
+            color: var(--core-text);
+        }
+
+        .teacher-support-banner p {
+            margin: 0;
+            font-size: .9rem;
+            color: var(--core-text-muted);
+            line-height: 1.6;
         }
 
         /* Download */
@@ -1464,14 +1598,29 @@
             <div class="core-header">
 
                 <h2>
-                    Elige el plan que necesitas
+                    Planes diseñados para docentes
                 </h2>
 
                 <p>
-                    Comienza con lo necesario y aumenta las capacidades
-                    de CORE conforme crezcan tus necesidades docentes.
+                    Comienza gratis y escala las capacidades de CORE según tus necesidades.
+                    Precios transparentes en moneda nacional (MXN), sin plazos forzosos.
                 </p>
 
+            </div>
+
+            <!-- Selector de Periodicidad -->
+            <div class="pricing-switcher-container">
+                <div class="pricing-switcher" role="tablist" aria-label="Periodicidad de pago">
+                    <button type="button" class="period-btn active" data-period="anual" role="tab" aria-selected="true">
+                        Anual <span class="save-tag">⭐ Más Conveniente</span>
+                    </button>
+                    <button type="button" class="period-btn" data-period="semestral" role="tab" aria-selected="false">
+                        Semestral (6 meses)
+                    </button>
+                    <button type="button" class="period-btn" data-period="trimestral" role="tab" aria-selected="false">
+                        Trimestral (3 meses)
+                    </button>
+                </div>
             </div>
 
 
@@ -1487,7 +1636,17 @@
                     </div>
 
                     <div class="price-description">
-                        Para comenzar a organizar tu trabajo docente.
+                        Para conocer y probar CORE con tus propios grupos y alumnos.
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-val">
+                            <span class="price-amount">$0</span>
+                            <span class="price-currency">MXN</span>
+                        </div>
+                        <div class="price-sub-equiv">
+                            Uso libre sin costo
+                        </div>
                     </div>
 
                     <div class="price-limit">
@@ -1496,11 +1655,12 @@
 
                     <ul class="price-list">
 
-                        <li>Alumnos</li>
-                        <li>Grupos</li>
-                        <li>Asistencia</li>
-                        <li>Evaluación básica</li>
-                        <li>Configuración</li>
+                        <li>Gestión de Alumnos y Grupos</li>
+                        <li>Registro de Asistencia diaria</li>
+                        <li>Evaluación básica de alumnos</li>
+                        <li>Configuración de ciclo escolar</li>
+                        <li>100% Offline (sin internet)</li>
+                        <li>Compatible con Windows y Mac</li>
 
                     </ul>
 
@@ -1521,7 +1681,18 @@
                     </div>
 
                     <div class="price-description">
-                        Para docentes que necesitan mayor capacidad.
+                        Para el trabajo docente diario y concentrados escolares.
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-val">
+                            <span class="price-amount plan-price" data-plan="basico" data-anual="$549" data-semestral="$349" data-trimestral="$199">$549</span>
+                            <span class="price-currency">MXN</span>
+                            <span class="price-cycle plan-cycle" data-plan="basico" data-anual="/ año" data-semestral="/ 6 meses" data-trimestral="/ 3 meses">/ año</span>
+                        </div>
+                        <div class="price-sub-equiv plan-equiv" data-plan="basico" data-anual="Equivale a ~$45.75 al mes" data-semestral="Equivale a ~$58.15 al mes" data-trimestral="Para 1 periodo escolar">
+                            Equivale a ~$45.75 al mes
+                        </div>
                     </div>
 
                     <div class="price-limit">
@@ -1531,15 +1702,19 @@
                     <ul class="price-list">
 
                         <li>Todo lo incluido en Free</li>
-                        <li>Mayor capacidad de alumnos</li>
-                        <li>Reportes</li>
-                        <li>Gestión ampliada de grupos</li>
+                        <li>Mayor capacidad (10 grupos / 150 alumnos)</li>
+                        <li>Generación de Reportes y concentrados</li>
+                        <li>Respaldos seguros de información</li>
+                        <li>Exportación de listas y datos</li>
+                        <li>Gestión ampliada de grupos y materias</li>
 
                     </ul>
 
-                    <a href="#comprar"
+                    <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20deseo%20adquirir%20la%20licencia%20de%20JOKARHE%20CORE%20Plan%20B%C3%A1sico."
+                       target="_blank"
+                       rel="noopener"
                        class="btn btn-outline price-btn">
-                        Solicitar licencia
+                        Solicitar Básico
                     </a>
 
                 </div>
@@ -1550,7 +1725,7 @@
                 <div class="price-card featured">
 
                     <div class="popular">
-                        MÁS CAPACIDAD
+                        ⭐ RECOMENDADO
                     </div>
 
                     <div class="price-name">
@@ -1558,26 +1733,44 @@
                     </div>
 
                     <div class="price-description">
-                        Para docentes que quieren aprovechar CORE al máximo.
+                        Para docentes que quieren aprovechar todo el potencial curricular.
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-val">
+                            <span class="price-amount plan-price" data-plan="premium" data-anual="$799" data-semestral="$499" data-trimestral="$299">$799</span>
+                            <span class="price-currency">MXN</span>
+                            <span class="price-cycle plan-cycle" data-plan="premium" data-anual="/ año" data-semestral="/ 6 meses" data-trimestral="/ 3 meses">/ año</span>
+                        </div>
+                        <div class="price-sub-equiv plan-equiv" data-plan="premium" data-anual="Equivale a ~$66.50 al mes" data-semestral="Equivale a ~$83.15 al mes" data-trimestral="Acceso total por 1 periodo">
+                            Equivale a ~$66.50 al mes
+                        </div>
                     </div>
 
                     <div class="price-limit">
-                        Grupos y alumnos ilimitados
+                        Grupos y alumnos ILIMITADOS
                     </div>
 
                     <ul class="price-list">
 
                         <li>Todo lo incluido en Básico</li>
-                        <li>Grupos ilimitados</li>
-                        <li>Alumnos ilimitados</li>
-                        <li>Evaluación avanzada</li>
-                        <li>Sincronización</li>
+                        <li><strong>Grupos y Alumnos Ilimitados</strong></li>
+                        <li>Evaluación avanzada ponderada</li>
+                        <li><strong>Seguimiento PDA (NEM)</strong></li>
+                        <li>Dinámicas de <strong>Equipos colaborativos</strong></li>
+                        <li>Módulo de <strong>Conducta y disciplina</strong></li>
+                        <li>Bitácora de <strong>Incidentes escolares</strong></li>
+                        <li>Reportes y concentrados avanzados</li>
+                        <li>Sincronización y funciones futuras</li>
+                        <li>Soporte prioritario</li>
 
                     </ul>
 
-                    <a href="#comprar"
+                    <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20deseo%20adquirir%20la%20licencia%20de%20JOKARHE%20CORE%20Plan%20Premium."
+                       target="_blank"
+                       rel="noopener"
                        class="btn btn-primary price-btn">
-                        Solicitar licencia
+                        Solicitar Premium
                     </a>
 
                 </div>
@@ -1592,24 +1785,36 @@
                     </div>
 
                     <div class="price-description">
-                        Para instituciones y necesidades avanzadas.
+                        Para escuelas, secundarias, directivos y supervisiones.
+                    </div>
+
+                    <div class="price-box">
+                        <div class="price-val">
+                            <span class="price-amount" style="font-size: 1.8rem;">Cotización</span>
+                        </div>
+                        <div class="price-sub-equiv" style="color: var(--core-cyan); background: rgba(0, 184, 216, .12);">
+                            A la medida de tu institución
+                        </div>
                     </div>
 
                     <div class="price-limit">
-                        Todas las capacidades
+                        Paquetes de 10, 20, 50+ docentes
                     </div>
 
                     <ul class="price-list">
 
                         <li>Todo lo incluido en Premium</li>
-                        <li>Capacidades completas</li>
-                        <li>Soluciones institucionales</li>
-                        <li>Soporte prioritario</li>
-                        <li>Atención personalizada</li>
+                        <li>Licenciamiento para plantilla docente completa</li>
+                        <li>Despliegue e implementación institucional</li>
+                        <li>Acompañamiento y capacitación</li>
+                        <li>Facturación electrónica (CFDI) disponible</li>
+                        <li>Soporte y asesoría personalizada</li>
 
                     </ul>
 
-                    <a href="#comprar"
+                    <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20solicito%20una%20cotizaci%C3%B3n%20institucional%20de%20JOKARHE%20CORE%20para%20nuestra%20escuela."
+                       target="_blank"
+                       rel="noopener"
                        class="btn btn-outline price-btn">
                         Hablar con un asesor
                     </a>
@@ -1618,9 +1823,17 @@
 
             </div>
 
-            <p style="text-align:center;margin-top:30px;color:var(--core-gray);font-size:.85rem;">
-                Los planes y capacidades pueden evolucionar conforme se incorporen nuevas funciones a CORE.
-            </p>
+            <!-- Banner de Docentes para Docentes -->
+            <div class="teacher-support-banner">
+                <div class="teacher-support-icon">🎓</div>
+                <div>
+                    <h4>Tecnología desarrollada por docentes, para docentes</h4>
+                    <p>
+                        JOKARHE CORE nace en el aula de secundaria para resolver necesidades reales de gestión y evaluación docente.
+                        Cada licencia adquirida financia directamente el desarrollo continuo, mantenimiento y nuevas herramientas para el magisterio.
+                    </p>
+                </div>
+            </div>
 
         </div>
 
@@ -2137,10 +2350,25 @@
 
                     <div class="core-faq-answer">
 
-                        Escríbenos por WhatsApp indicando el plan que deseas.
-                        Te proporcionaremos los datos de transferencia,
-                        confirmaremos el pago y posteriormente recibirás
-                        la información necesaria para activar tu licencia.
+                        Escríbenos por WhatsApp indicando el plan que deseas (Básico, Premium o Enterprise) y la duración (Trimestral, Semestral o Anual).
+                        Te proporcionaremos los datos de transferencia, confirmaremos tu pago y recibirás de inmediato tu clave de activación.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿Qué modalidades de pago y duración existen?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        Disponemos de tres modalidades de licenciamiento: <strong>Trimestral</strong> (para cubrir 1 periodo escolar), <strong>Semestral</strong> (6 meses) y <strong>Anual</strong> (12 meses).
+                        La opción Anual es la más recomendada y económica, equivalente a solo ~$45.75/mes en el plan Básico o ~$66.50/mes en el plan Premium.
 
                     </div>
 
@@ -2441,6 +2669,49 @@
                 }
             });
         }
+
+        /* Selector de Periodicidad de Precios (Trimestral / Semestral / Anual) */
+        const periodBtns = document.querySelectorAll('.period-btn');
+        const planPrices = document.querySelectorAll('.plan-price');
+        const planCycles = document.querySelectorAll('.plan-cycle');
+        const planEquivs = document.querySelectorAll('.plan-equiv');
+
+        periodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const period = btn.getAttribute('data-period');
+                
+                periodBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+
+                // Actualizar montos de precio
+                planPrices.forEach(el => {
+                    const val = el.getAttribute('data-' + period);
+                    if (val) {
+                        el.textContent = val;
+                    }
+                });
+
+                // Actualizar textos de ciclo (/ año, / 6 meses, / 3 meses)
+                planCycles.forEach(el => {
+                    const cycle = el.getAttribute('data-' + period);
+                    if (cycle) {
+                        el.textContent = cycle;
+                    }
+                });
+
+                // Actualizar equivalencia mensual o nota de periodo
+                planEquivs.forEach(el => {
+                    const equiv = el.getAttribute('data-' + period);
+                    if (equiv) {
+                        el.textContent = equiv;
+                    }
+                });
+            });
+        });
 
         /* FAQ */
 
