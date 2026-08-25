@@ -27,11 +27,27 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Estilos específicos de la nueva landing -->
+    <!-- Inicialización de Tema para evitar parpadeo -->
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('jokarhe-theme');
+                if (savedTheme === 'dark' || savedTheme === 'light') {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
+    <!-- Estilos específicos de la nueva landing adaptables a Modo Día / Modo Noche -->
     <style>
 
         /* =========================================================
-           CORE LANDING
+           VARIABLES Y THEMING (DÍA / NOCHE AUTOMÁTICO Y MANUAL)
         ========================================================= */
 
         :root {
@@ -40,9 +56,90 @@
             --core-cyan: #00b8d8;
             --core-green: #18c77a;
             --core-gold: #f5b82e;
+
+            /* Modo Claro (Por Defecto) */
             --core-bg: #f6f8fb;
-            --core-dark: #101828;
-            --core-gray: #667085;
+            --core-surface: #ffffff;
+            --core-surface-alt: #f0f4f8;
+            --core-surface-hover: #ffffff;
+            --core-border: #e2e8f0;
+            --core-border-subtle: #edf2f7;
+            --core-text: #0f172a;
+            --core-text-muted: #64748b;
+            --core-text-subtle: #94a3b8;
+            --core-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+            --core-card-shadow-hover: 0 18px 45px rgba(15, 23, 42, 0.10);
+            --core-badge-bg: rgba(0, 184, 216, 0.10);
+            --core-badge-border: rgba(0, 184, 216, 0.25);
+            --core-badge-text: #008fa8;
+            --core-install-num-bg: #0b2342;
+            --core-install-num-text: #ffffff;
+            --core-faq-border: #e2e8f0;
+        }
+
+        /* Modo Oscuro Automático (Según configuración del Navegador / SO) */
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --core-bg: #070d17;
+                --core-surface: #0e1726;
+                --core-surface-alt: #152238;
+                --core-surface-hover: #16263f;
+                --core-border: rgba(255, 255, 255, 0.09);
+                --core-border-subtle: rgba(255, 255, 255, 0.05);
+                --core-text: #f8fafc;
+                --core-text-muted: #94a3b8;
+                --core-text-subtle: #64748b;
+                --core-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                --core-card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.6);
+                --core-badge-bg: rgba(0, 184, 216, 0.15);
+                --core-badge-border: rgba(0, 184, 216, 0.35);
+                --core-badge-text: #38d6f2;
+                --core-install-num-bg: #00b8d8;
+                --core-install-num-text: #071526;
+                --core-faq-border: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* Forzado Modo Oscuro (Manual) */
+        [data-theme="dark"] {
+            --core-bg: #070d17;
+            --core-surface: #0e1726;
+            --core-surface-alt: #152238;
+            --core-surface-hover: #16263f;
+            --core-border: rgba(255, 255, 255, 0.09);
+            --core-border-subtle: rgba(255, 255, 255, 0.05);
+            --core-text: #f8fafc;
+            --core-text-muted: #94a3b8;
+            --core-text-subtle: #64748b;
+            --core-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --core-card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.6);
+            --core-badge-bg: rgba(0, 184, 216, 0.15);
+            --core-badge-border: rgba(0, 184, 216, 0.35);
+            --core-badge-text: #38d6f2;
+            --core-install-num-bg: #00b8d8;
+            --core-install-num-text: #071526;
+            --core-faq-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Forzado Modo Claro (Manual) */
+        [data-theme="light"] {
+            --core-bg: #f6f8fb;
+            --core-surface: #ffffff;
+            --core-surface-alt: #f0f4f8;
+            --core-surface-hover: #ffffff;
+            --core-border: #e2e8f0;
+            --core-border-subtle: #edf2f7;
+            --core-text: #0f172a;
+            --core-text-muted: #64748b;
+            --core-text-subtle: #94a3b8;
+            --core-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+            --core-card-shadow-hover: 0 18px 45px rgba(15, 23, 42, 0.10);
+            --core-badge-bg: rgba(0, 184, 216, 0.10);
+            --core-badge-border: rgba(0, 184, 216, 0.25);
+            --core-badge-text: #008fa8;
+            --core-install-num-bg: #0b2342;
+            --core-install-num-text: #ffffff;
+            --core-faq-border: #e2e8f0;
         }
 
         html {
@@ -50,7 +147,62 @@
         }
 
         body {
+            background-color: var(--core-bg);
+            color: var(--core-text);
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Botón selector de Tema (Día/Noche) */
+        .theme-toggle-btn {
+            background: var(--core-badge-bg);
+            border: 1px solid var(--core-badge-border);
+            color: var(--core-text);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.15rem;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            outline: none;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--core-cyan);
+        }
+
+        .theme-icon-sun {
+            display: none;
+        }
+        .theme-icon-moon {
+            display: inline-block;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .theme-icon-sun {
+                display: inline-block;
+            }
+            :root:not([data-theme="light"]) .theme-icon-moon {
+                display: none;
+            }
+        }
+
+        [data-theme="dark"] .theme-icon-sun {
+            display: inline-block !important;
+        }
+        [data-theme="dark"] .theme-icon-moon {
+            display: none !important;
+        }
+
+        [data-theme="light"] .theme-icon-sun {
+            display: none !important;
+        }
+        [data-theme="light"] .theme-icon-moon {
+            display: inline-block !important;
         }
 
         .core-badge {
@@ -59,9 +211,9 @@
             gap: 8px;
             padding: 8px 14px;
             border-radius: 30px;
-            background: rgba(0, 184, 216, .10);
-            border: 1px solid rgba(0, 184, 216, .25);
-            color: var(--core-cyan);
+            background: var(--core-badge-bg);
+            border: 1px solid var(--core-badge-border);
+            color: var(--core-badge-text);
             font-weight: 700;
             font-size: .85rem;
             margin-bottom: 20px;
@@ -106,6 +258,7 @@
             line-height: 1.03;
             margin: 0 0 25px;
             letter-spacing: -2px;
+            color: #ffffff;
         }
 
         .hero-core h1 span {
@@ -173,6 +326,7 @@
             justify-content: center;
             text-align: center;
             padding: 30px;
+            color: white;
         }
 
         .core-screen-placeholder h3 {
@@ -214,6 +368,7 @@
         /* Section */
         .core-section {
             padding: 100px 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .core-section.light {
@@ -235,10 +390,15 @@
             font-size: clamp(2rem,4vw,3.2rem);
             margin-bottom: 15px;
             letter-spacing: -1px;
+            color: var(--core-text);
+        }
+
+        .dark .core-header h2 {
+            color: #ffffff;
         }
 
         .core-header p {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             font-size: 1.08rem;
             line-height: 1.7;
         }
@@ -257,14 +417,17 @@
         .core-feature {
             padding: 30px;
             border-radius: 18px;
-            background: white;
-            border: 1px solid #e5e9f0;
-            transition: .25s ease;
+            background: var(--core-surface);
+            border: 1px solid var(--core-border);
+            color: var(--core-text);
+            box-shadow: var(--core-card-shadow);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .3s ease;
         }
 
         .core-feature:hover {
             transform: translateY(-5px);
-            box-shadow: 0 18px 45px rgba(16,24,40,.08);
+            box-shadow: var(--core-card-shadow-hover);
+            border-color: var(--core-cyan);
         }
 
         .core-feature-icon {
@@ -274,7 +437,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 14px;
-            background: rgba(0,184,216,.10);
+            background: var(--core-badge-bg);
             color: var(--core-cyan);
             font-size: 1.5rem;
             margin-bottom: 18px;
@@ -283,10 +446,11 @@
         .core-feature h3 {
             margin-bottom: 10px;
             font-size: 1.15rem;
+            color: var(--core-text);
         }
 
         .core-feature p {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             line-height: 1.65;
             font-size: .95rem;
         }
@@ -304,6 +468,7 @@
             border-radius: 14px;
             padding: 22px;
             transition: .25s ease;
+            color: white;
         }
 
         .module:hover {
@@ -319,6 +484,7 @@
         .module h3 {
             margin: 0 0 7px;
             font-size: 1rem;
+            color: white;
         }
 
         .module p {
@@ -339,10 +505,11 @@
         .offline-content h2 {
             font-size: clamp(2rem,4vw,3rem);
             margin-bottom: 20px;
+            color: var(--core-text);
         }
 
         .offline-content p {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             line-height: 1.7;
             font-size: 1.05rem;
         }
@@ -358,6 +525,7 @@
             display: flex;
             gap: 10px;
             align-items: flex-start;
+            color: var(--core-text);
         }
 
         .offline-list span {
@@ -390,6 +558,7 @@
         .offline-card h3 {
             font-size: 2rem;
             margin: 25px 0 12px;
+            color: white;
         }
 
         .offline-card p {
@@ -405,18 +574,20 @@
         }
 
         .price-card {
-            background: white;
-            border: 1px solid #e4e8ef;
+            background: var(--core-surface);
+            border: 1px solid var(--core-border);
             border-radius: 20px;
             padding: 30px 24px;
             position: relative;
             display: flex;
             flex-direction: column;
+            box-shadow: var(--core-card-shadow);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .3s ease;
         }
 
         .price-card.featured {
             border: 2px solid var(--core-cyan);
-            box-shadow: 0 20px 55px rgba(0,184,216,.13);
+            box-shadow: 0 20px 55px rgba(0,184,216,.18);
             transform: translateY(-8px);
         }
 
@@ -438,10 +609,11 @@
             font-size: 1.25rem;
             font-weight: 800;
             margin-bottom: 8px;
+            color: var(--core-text);
         }
 
         .price-description {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             font-size: .87rem;
             min-height: 45px;
         }
@@ -458,6 +630,7 @@
             font-size: .9rem;
             display: flex;
             gap: 8px;
+            color: var(--core-text);
         }
 
         .price-list li::before {
@@ -469,7 +642,9 @@
         .price-limit {
             padding: 12px;
             border-radius: 10px;
-            background: #f4f7fa;
+            background: var(--core-surface-alt);
+            color: var(--core-text);
+            border: 1px solid var(--core-border);
             font-size: .85rem;
             margin-bottom: 20px;
             font-weight: 700;
@@ -490,12 +665,13 @@
         }
 
         .download-card {
-            background: white;
-            border: 1px solid #e2e7ee;
+            background: var(--core-surface);
+            border: 1px solid var(--core-border);
             border-radius: 20px;
             padding: 35px 25px;
             text-align: center;
-            transition: .25s ease;
+            box-shadow: var(--core-card-shadow);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .3s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -503,7 +679,8 @@
 
         .download-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 18px 45px rgba(16,24,40,.08);
+            box-shadow: var(--core-card-shadow-hover);
+            border-color: var(--core-cyan);
         }
 
         .download-icon {
@@ -514,10 +691,11 @@
         .download-card h3 {
             margin-bottom: 8px;
             font-size: 1.3rem;
+            color: var(--core-text);
         }
 
         .download-card p {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             font-size: .9rem;
             margin-bottom: 22px;
             min-height: 48px;
@@ -527,8 +705,9 @@
             display: inline-block;
             font-size: 0.75rem;
             padding: 4px 10px;
-            background: #eef2f6;
-            color: var(--core-blue);
+            background: var(--core-surface-alt);
+            color: var(--core-cyan);
+            border: 1px solid var(--core-border);
             border-radius: 12px;
             font-weight: 700;
             margin-bottom: 12px;
@@ -542,15 +721,18 @@
         }
 
         .install-card {
-            background: white;
-            border: 1px solid #e4e8ef;
+            background: var(--core-surface);
+            border: 1px solid var(--core-border);
             border-radius: 18px;
             padding: 30px;
+            box-shadow: var(--core-card-shadow);
+            transition: background-color .3s ease, border-color .3s ease;
         }
 
         .install-card h3 {
             font-size: 1.35rem;
             margin-bottom: 20px;
+            color: var(--core-text);
         }
 
         .install-step {
@@ -563,8 +745,8 @@
             flex: 0 0 32px;
             height: 32px;
             border-radius: 50%;
-            background: var(--core-blue);
-            color: white;
+            background: var(--core-install-num-bg);
+            color: var(--core-install-num-text);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -574,9 +756,13 @@
 
         .install-step p {
             margin: 0;
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             line-height: 1.5;
             font-size: .9rem;
+        }
+
+        .install-step strong {
+            color: var(--core-text);
         }
 
         /* Purchase */
@@ -596,6 +782,7 @@
         .purchase h2 {
             font-size: clamp(2rem,4vw,3.3rem);
             margin-bottom: 15px;
+            color: white;
         }
 
         .purchase > .container > .purchase-box > p {
@@ -634,6 +821,7 @@
         .purchase-step h3 {
             font-size: 1rem;
             margin-bottom: 8px;
+            color: white;
         }
 
         .purchase-step p {
@@ -668,10 +856,11 @@
         .teacher-message h2 {
             font-size: clamp(2rem,4vw,3rem);
             margin: 20px 0;
+            color: var(--core-text);
         }
 
         .teacher-message p {
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             font-size: 1.08rem;
             line-height: 1.8;
         }
@@ -683,7 +872,7 @@
         }
 
         .core-faq-item {
-            border-bottom: 1px solid #e3e7ed;
+            border-bottom: 1px solid var(--core-faq-border);
         }
 
         .core-faq-question {
@@ -698,13 +887,14 @@
             font: inherit;
             font-weight: 700;
             cursor: pointer;
-            color: var(--core-dark);
+            color: var(--core-text);
+            transition: color .2s ease;
         }
 
         .core-faq-answer {
             display: none;
             padding: 0 0 22px;
-            color: var(--core-gray);
+            color: var(--core-text-muted);
             line-height: 1.7;
         }
 
@@ -831,6 +1021,10 @@
         </div>
 
         <div class="nav-actions">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar modo día / noche" title="Cambiar modo claro / oscuro">
+                <span class="theme-icon-sun">☀️</span>
+                <span class="theme-icon-moon">🌙</span>
+            </button>
             <button class="mobile-menu-btn" aria-label="Abrir menú">
                 <span></span>
                 <span></span>
@@ -2212,6 +2406,41 @@
     <script src="script.js"></script>
 
     <script>
+
+        /* Controlador de Tema (Modo Día / Modo Noche con Detección del Sistema) */
+        const themeBtn = document.getElementById('theme-toggle');
+        const rootDoc = document.documentElement;
+
+        function getActiveTheme() {
+            const saved = localStorage.getItem('jokarhe-theme');
+            if (saved === 'dark' || saved === 'light') return saved;
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+
+        function updateTheme(newTheme, save = false) {
+            if (save) {
+                localStorage.setItem('jokarhe-theme', newTheme);
+            }
+            rootDoc.setAttribute('data-theme', newTheme);
+        }
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const current = getActiveTheme();
+                const targetTheme = current === 'dark' ? 'light' : 'dark';
+                updateTheme(targetTheme, true);
+            });
+        }
+
+        // Detección en tiempo real de cambios en la configuración del navegador/sistema operativo
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // Solo adaptamos automáticamente si el usuario no ha forzado manualmente una preferencia
+                if (!localStorage.getItem('jokarhe-theme')) {
+                    updateTheme(e.matches ? 'dark' : 'light', false);
+                }
+            });
+        }
 
         /* FAQ */
 

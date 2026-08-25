@@ -50,19 +50,43 @@
     --radius-lg: 24px;
 }
 
-/* Dark Mode Preferences */
+/* Dark Mode Preferences (System + Manual data-theme) */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --bg-main: #04101A; /* Very dark blue, almost black */
-        --bg-surface: #071A2C;
-        --bg-elevated: #0B253D;
-        --text-primary: #F5F7FA;
-        --text-secondary: #A0B0C0;
-        --border-color: rgba(255, 255, 255, 0.05);
+    :root:not([data-theme="light"]) {
+        --bg-main: #070d17;
+        --bg-surface: #0e1726;
+        --bg-elevated: #152238;
+        --text-primary: #F8FAFC;
+        --text-secondary: #94A3B8;
+        --border-color: rgba(255, 255, 255, 0.08);
         --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
         --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
         --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
     }
+}
+
+[data-theme="dark"] {
+    --bg-main: #070d17;
+    --bg-surface: #0e1726;
+    --bg-elevated: #152238;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] {
+    --bg-main: #F5F7FA;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #FFFFFF;
+    --text-primary: #202124;
+    --text-secondary: #5f6368;
+    --border-color: rgba(15, 76, 129, 0.1);
+    --shadow-sm: 0 2px 8px rgba(7, 43, 74, 0.05);
+    --shadow-md: 0 8px 24px rgba(7, 43, 74, 0.08);
+    --shadow-lg: 0 16px 48px rgba(7, 43, 74, 0.12);
 }
 
 /* --------------------------------------------------------------------------
