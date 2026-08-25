@@ -17,13 +17,17 @@
 
     <link rel="canonical" href="https://josue958.github.io/Jokarhe/">
 
+    <!-- Favicon e Icono de la Aplicación -->
+    <link rel="icon" type="image/png" href="Documentos/icon.png">
+    <link rel="apple-touch-icon" href="Documentos/icon.png">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="JOKARHE CORE | Sistema Educativo para Docentes">
     <meta property="og:description"
         content="Una herramienta desarrollada por docentes para docentes. Organiza tus grupos, alumnos, asistencia, evaluación y seguimiento académico desde una sola aplicación.">
     <meta property="og:url" content="https://josue958.github.io/Jokarhe/">
-    <meta property="og:image" content="Documentos/Logo/Identidad%20Visual.png">
+    <meta property="og:image" content="Documentos/Logo_empressa.png">
 
     <link rel="stylesheet" href="styles.css">
 
@@ -67,6 +71,11 @@
             --core-text: #0f172a;
             --core-text-muted: #64748b;
             --core-text-subtle: #94a3b8;
+            --core-nav-bg: rgba(255, 255, 255, 0.94);
+            --core-nav-text: #0f172a;
+            --core-nav-link: #334155;
+            --core-nav-border: #e2e8f0;
+            --core-nav-shadow: 0 4px 20px rgba(15, 23, 42, 0.07);
             --core-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
             --core-card-shadow-hover: 0 18px 45px rgba(15, 23, 42, 0.10);
             --core-badge-bg: rgba(0, 184, 216, 0.10);
@@ -89,6 +98,11 @@
                 --core-text: #f8fafc;
                 --core-text-muted: #94a3b8;
                 --core-text-subtle: #64748b;
+                --core-nav-bg: rgba(7, 13, 23, 0.94);
+                --core-nav-text: #f8fafc;
+                --core-nav-link: #cbd5e1;
+                --core-nav-border: rgba(255, 255, 255, 0.09);
+                --core-nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
                 --core-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
                 --core-card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.6);
                 --core-badge-bg: rgba(0, 184, 216, 0.15);
@@ -111,6 +125,11 @@
             --core-text: #f8fafc;
             --core-text-muted: #94a3b8;
             --core-text-subtle: #64748b;
+            --core-nav-bg: rgba(7, 13, 23, 0.94);
+            --core-nav-text: #f8fafc;
+            --core-nav-link: #cbd5e1;
+            --core-nav-border: rgba(255, 255, 255, 0.09);
+            --core-nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             --core-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             --core-card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.6);
             --core-badge-bg: rgba(0, 184, 216, 0.15);
@@ -132,6 +151,11 @@
             --core-text: #0f172a;
             --core-text-muted: #64748b;
             --core-text-subtle: #94a3b8;
+            --core-nav-bg: rgba(255, 255, 255, 0.94);
+            --core-nav-text: #0f172a;
+            --core-nav-link: #334155;
+            --core-nav-border: #e2e8f0;
+            --core-nav-shadow: 0 4px 20px rgba(15, 23, 42, 0.07);
             --core-card-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
             --core-card-shadow-hover: 0 18px 45px rgba(15, 23, 42, 0.10);
             --core-badge-bg: rgba(0, 184, 216, 0.10);
@@ -151,6 +175,92 @@
             color: var(--core-text);
             overflow-x: hidden;
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* =========================================================
+           NAVBAR MODERNA Y VISIBLE (MODO DÍA Y NOCHE)
+        ========================================================= */
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: var(--core-nav-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--core-nav-border);
+            box-shadow: var(--core-nav-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--core-nav-text) !important;
+            text-decoration: none;
+        }
+
+        .nav-logo-img {
+            height: 32px;
+            width: auto;
+            max-width: 42px;
+            object-fit: contain;
+            border-radius: 6px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .nav-logo-text {
+            display: inline-block;
+            vertical-align: middle;
+            color: var(--core-nav-text);
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 26px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--core-nav-link) !important;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--core-cyan) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--core-cyan);
+            transition: width 0.2s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         /* Botón selector de Tema (Día/Noche) */
@@ -301,42 +411,128 @@
         .core-screen {
             position: relative;
             background: #172438;
-            border: 1px solid rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.15);
             border-radius: 18px;
-            padding: 10px;
+            padding: 12px;
             box-shadow:
-                0 35px 80px rgba(0,0,0,.35),
-                0 0 80px rgba(0,184,216,.08);
-            transform: perspective(1200px) rotateY(-5deg) rotateX(2deg);
+                0 35px 80px rgba(0,0,0,.45),
+                0 0 80px rgba(0,184,216,.15);
+            transform: perspective(1200px) rotateY(-4deg) rotateX(2deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .core-screen img {
-            width: 100%;
-            display: block;
-            border-radius: 12px;
+        .core-screen:hover {
+            transform: perspective(1200px) rotateY(0deg) rotateX(0deg) translateY(-4px);
+            box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 90px rgba(0,184,216,.22);
         }
 
-        .core-screen-placeholder {
-            min-height: 470px;
+        .core-screen-card {
             border-radius: 12px;
-            background:
-                linear-gradient(145deg,#18263a,#0d1727);
+            overflow: hidden;
+            background: #0d1727;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .core-screen-header-bar {
+            background: #08101a;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .window-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .window-dot.red { background: #ff5f56; }
+        .window-dot.yellow { background: #ffbd2e; }
+        .window-dot.green { background: #27c93f; }
+
+        .window-title {
+            margin-left: 10px;
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 600;
+        }
+
+        .core-screen-body {
+            padding: 38px 24px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(0, 184, 216, 0.15), transparent 70%), #0d1829;
+            color: white;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .core-app-icon-main {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 22px;
+            margin-bottom: 16px;
+            box-shadow: 0 12px 35px rgba(0, 184, 216, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .core-app-icon-main:hover {
+            transform: scale(1.08) rotate(2deg);
+        }
+
+        .core-app-features-mini {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .core-app-features-mini span {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+        }
+
+        /* Banner de reconocimiento de icono en Descargas */
+        .download-icon-preview {
+            max-width: 650px;
+            margin: 0 auto 35px;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 14px;
+            background: var(--core-surface-alt);
+            border: 1px solid var(--core-border);
+            padding: 12px 22px;
+            border-radius: 30px;
             text-align: center;
-            padding: 30px;
-            color: white;
+            box-shadow: var(--core-card-shadow);
         }
 
-        .core-screen-placeholder h3 {
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .app-official-icon-small {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
         }
 
-        .core-screen-placeholder p {
-            font-size: 1rem;
-            color: rgba(255,255,255,.55);
+        .download-icon-preview span {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--core-text);
         }
 
         /* Trust strip */
@@ -746,9 +942,130 @@
             color: var(--core-text);
             border: 1px solid var(--core-border);
             font-size: .82rem;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
             font-weight: 700;
             text-align: center;
+        }
+
+        /* Desglose de Costos por Periodo dentro de la tarjeta */
+        .plan-durations-box {
+            background: var(--core-surface-alt);
+            border: 1px solid var(--core-border);
+            border-radius: 12px;
+            padding: 10px 12px;
+            margin: 10px 0 16px;
+            font-size: .82rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .duration-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--core-text-muted);
+            padding: 3px 0;
+            border-bottom: 1px solid var(--core-border-subtle);
+        }
+
+        .duration-row:last-child {
+            border-bottom: none;
+        }
+
+        .duration-row strong {
+            color: var(--core-text);
+            font-weight: 700;
+        }
+
+        .duration-row.best-value {
+            background: rgba(24, 199, 122, 0.09);
+            border-radius: 6px;
+            padding: 5px 8px;
+            margin-top: 2px;
+            color: var(--core-text);
+            font-weight: 700;
+            border-bottom: none;
+        }
+
+        .duration-row.best-value strong {
+            color: var(--core-green);
+        }
+
+        /* Tabla Resumen Comparativa */
+        .pricing-summary-table-container {
+            max-width: 950px;
+            margin: 35px auto 0;
+            background: var(--core-surface);
+            border: 1px solid var(--core-border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: var(--core-card-shadow);
+        }
+
+        .pricing-summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: .88rem;
+        }
+
+        .pricing-summary-table th {
+            padding: 12px 14px;
+            background: var(--core-surface-alt);
+            color: var(--core-text);
+            font-weight: 800;
+            border-bottom: 2px solid var(--core-border);
+            white-space: nowrap;
+        }
+
+        .pricing-summary-table td {
+            padding: 14px 14px;
+            border-bottom: 1px solid var(--core-border);
+            color: var(--core-text);
+        }
+
+        .pricing-summary-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-summary-table tr.highlight-row {
+            background: rgba(0, 184, 216, 0.05);
+            font-weight: 600;
+        }
+
+        .badge-table-popular {
+            background: var(--core-cyan);
+            color: #042030;
+            font-size: .7rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .tag-equiv {
+            background: rgba(24, 199, 122, 0.12);
+            color: var(--core-green);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: .78rem;
+            white-space: nowrap;
+        }
+
+        .tag-free {
+            background: var(--core-surface-alt);
+            color: var(--core-text-muted);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: .78rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .price-btn {
@@ -1134,10 +1451,10 @@
     <nav class="navbar">
 
         <a href="#inicio" class="nav-logo">
-            <img src="Documentos/Logo/Logo_empressa.png"
+            <img src="Documentos/Logo_empressa.png"
                 alt="Jokarhe Systems"
-                style="height:32px;width:auto;margin-right:10px;border-radius:4px;">
-            JOKARHE
+                class="nav-logo-img">
+            <span class="nav-logo-text">JOKARHE</span>
         </a>
 
         <div class="nav-links">
@@ -1221,21 +1538,34 @@
 
             <div class="core-screen">
 
-                <div class="core-screen-placeholder">
+                <div class="core-screen-card">
 
-                    <div>
+                    <div class="core-screen-header-bar">
+                        <span class="window-dot red"></span>
+                        <span class="window-dot yellow"></span>
+                        <span class="window-dot green"></span>
+                        <span class="window-title">JOKARHE CORE v1.4.75 — Sistema Docente</span>
+                    </div>
 
-                        <div style="font-size:4rem;margin-bottom:20px;">
-                            📊
-                        </div>
+                    <div class="core-screen-body">
 
-                        <h3>
+                        <img src="Documentos/icon.png"
+                            alt="Logotipo Oficial JOKARHE CORE"
+                            class="core-app-icon-main">
+
+                        <h3 style="margin: 0 0 6px; font-size: 1.6rem; color: #ffffff;">
                             JOKARHE CORE
                         </h3>
 
-                        <p>
-                            Gestión docente integral
+                        <p style="margin: 0; color: rgba(255,255,255,.75); font-size: .92rem;">
+                            Sistema Educativo Integral para Docentes
                         </p>
+
+                        <div class="core-app-features-mini">
+                            <span>⚡ 100% Offline</span>
+                            <span>📋 Asistencia y Evaluación</span>
+                            <span>🎯 PDA / NEM</span>
+                        </div>
 
                     </div>
 
@@ -1649,6 +1979,22 @@
                         </div>
                     </div>
 
+                    <!-- Desglose de Periodos -->
+                    <div class="plan-durations-box">
+                        <div class="duration-row">
+                            <span>📅 Duración:</span>
+                            <strong>Sin límite</strong>
+                        </div>
+                        <div class="duration-row">
+                            <span>👥 Capacidad:</span>
+                            <strong>3 grupos · 40 alumnos</strong>
+                        </div>
+                        <div class="duration-row best-value">
+                            <span>✨ Prueba en tu aula:</span>
+                            <strong>$0 MXN / Gratis</strong>
+                        </div>
+                    </div>
+
                     <div class="price-limit">
                         Hasta 3 grupos · 40 alumnos
                     </div>
@@ -1692,6 +2038,22 @@
                         </div>
                         <div class="price-sub-equiv plan-equiv" data-plan="basico" data-anual="Equivale a ~$45.75 al mes" data-semestral="Equivale a ~$58.15 al mes" data-trimestral="Para 1 periodo escolar">
                             Equivale a ~$45.75 al mes
+                        </div>
+                    </div>
+
+                    <!-- Desglose de Costos por Periodo -->
+                    <div class="plan-durations-box">
+                        <div class="duration-row">
+                            <span>📅 Trimestral (3 meses):</span>
+                            <strong>$199 MXN</strong>
+                        </div>
+                        <div class="duration-row">
+                            <span>📅 Semestral (6 meses):</span>
+                            <strong>$349 MXN</strong>
+                        </div>
+                        <div class="duration-row best-value">
+                            <span>⭐ Anual (12 meses):</span>
+                            <strong>$549 MXN <small>(~$45.75/mes)</small></strong>
                         </div>
                     </div>
 
@@ -1747,6 +2109,22 @@
                         </div>
                     </div>
 
+                    <!-- Desglose de Costos por Periodo -->
+                    <div class="plan-durations-box">
+                        <div class="duration-row">
+                            <span>📅 Trimestral (3 meses):</span>
+                            <strong>$299 MXN</strong>
+                        </div>
+                        <div class="duration-row">
+                            <span>📅 Semestral (6 meses):</span>
+                            <strong>$499 MXN</strong>
+                        </div>
+                        <div class="duration-row best-value">
+                            <span>⭐ Anual (12 meses):</span>
+                            <strong>$799 MXN <small>(~$66.50/mes)</small></strong>
+                        </div>
+                    </div>
+
                     <div class="price-limit">
                         Grupos y alumnos ILIMITADOS
                     </div>
@@ -1797,6 +2175,22 @@
                         </div>
                     </div>
 
+                    <!-- Desglose de Periodos -->
+                    <div class="plan-durations-box">
+                        <div class="duration-row">
+                            <span>📅 Modalidades:</span>
+                            <strong>Semestral o Anual</strong>
+                        </div>
+                        <div class="duration-row">
+                            <span>👥 Colectivo:</span>
+                            <strong>10, 20, 50+ docentes</strong>
+                        </div>
+                        <div class="duration-row best-value">
+                            <span>📑 Facturación:</span>
+                            <strong>CFDI disponible</strong>
+                        </div>
+                    </div>
+
                     <div class="price-limit">
                         Paquetes de 10, 20, 50+ docentes
                     </div>
@@ -1821,6 +2215,56 @@
 
                 </div>
 
+            </div>
+
+            <!-- Tabla Resumen de Inversión por Periodo -->
+            <div class="pricing-summary-table-container">
+                <h3 style="text-align: center; margin: 0 0 18px; font-size: 1.25rem; color: var(--core-text);">
+                    📊 Comparativa de Costos por Periodo
+                </h3>
+                <div class="table-responsive">
+                    <table class="pricing-summary-table">
+                        <thead>
+                            <tr>
+                                <th>Plan</th>
+                                <th>Trimestral (3 meses)</th>
+                                <th>Semestral (6 meses)</th>
+                                <th>⭐ Anual (1 año completo)</th>
+                                <th>Equivalencia Mensual (Anual)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>⚪ Free</strong></td>
+                                <td>$0 MXN</td>
+                                <td>$0 MXN</td>
+                                <td><strong>$0 MXN</strong></td>
+                                <td><span class="tag-free">Uso libre</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🟢 Básico</strong></td>
+                                <td>$199 MXN</td>
+                                <td>$349 MXN</td>
+                                <td><strong style="color:var(--core-green);">$549 MXN</strong></td>
+                                <td><span class="tag-equiv">~$45.75 al mes</span></td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><strong>🔵 Premium</strong> <span class="badge-table-popular">⭐ Recomendado</span></td>
+                                <td>$299 MXN</td>
+                                <td>$499 MXN</td>
+                                <td><strong style="color:var(--core-cyan);">$799 MXN</strong></td>
+                                <td><span class="tag-equiv">~$66.50 al mes</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🟠 Enterprise</strong></td>
+                                <td>A cotizar</td>
+                                <td>A cotizar</td>
+                                <td><strong>Cotización a la medida</strong></td>
+                                <td>Paquetes escolares</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Banner de Docentes para Docentes -->
@@ -1855,11 +2299,16 @@
                 </h2>
 
                 <p>
-                    Instala la aplicación en tu computadora y comienza
-                    a trabajar. Selecciona la versión correspondiente
-                    a tu sistema operativo y arquitectura.
+                    Instala la aplicación en tu computadora y comienza a trabajar.
+                    Selecciona la versión correspondiente a tu sistema operativo y arquitectura.
                 </p>
 
+            </div>
+
+            <!-- Reconocimiento de icono de la aplicación -->
+            <div class="download-icon-preview">
+                <img src="Documentos/icon.png" alt="Icono oficial JOKARHE CORE" class="app-official-icon-small">
+                <span>Identifica este icono oficial en tu equipo tras completar la descarga e instalación.</span>
             </div>
 
 
@@ -2483,12 +2932,13 @@
 
                     <div class="footer-logo">
 
-                        <img src="Documentos/Logo/Logo_empressa.png"
+                        <img src="Documentos/Logo_empressa.png"
                             alt="Jokarhe Systems"
-                            style="max-height:48px;width:auto;margin-bottom:10px;border-radius:4px;">
+                            style="height:36px;width:auto;border-radius:6px;vertical-align:middle;display:inline-block;margin-right:10px;">
 
-                        <br>
-                        JOKARHE SYSTEMS
+                        <span style="font-weight:800;font-size:1.2rem;letter-spacing:0.5px;color:#ffffff;vertical-align:middle;">
+                            JOKARHE SYSTEMS
+                        </span>
 
                     </div>
 

@@ -240,56 +240,53 @@ img {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 5%;
+    padding: 12px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
     transition: all var(--transition-medium);
-    background: transparent;
-}
-
-.navbar.scrolled {
-    background: rgba(var(--bg-surface-rgb), 0.85); /* Requires rgb variable, fallback below */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 15px 5%;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-/* Hack for backdrop filter fallback since we don't have RGB vars */
-@supports (backdrop-filter: blur(12px)) {
-    .navbar.scrolled {
-        background: var(--bg-surface);
-        opacity: 0.95;
-    }
+    background: var(--core-nav-bg, rgba(255, 255, 255, 0.94));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--core-nav-border, var(--border-color));
+    box-shadow: var(--core-nav-shadow, var(--shadow-sm));
 }
 
 .nav-logo {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
+    color: var(--core-nav-text, var(--text-primary)) !important;
+    text-decoration: none;
 }
 
-.nav-logo svg {
-    width: 32px;
+.nav-logo-img {
     height: 32px;
+    width: auto;
+    max-width: 42px;
+    object-fit: contain;
+    border-radius: 6px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 28px;
     align-items: center;
 }
 
 .nav-link {
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--core-nav-link, var(--text-secondary)) !important;
     position: relative;
+    text-decoration: none;
+    transition: color var(--transition-fast);
 }
 
 .nav-link::after {
@@ -307,9 +304,13 @@ img {
     width: 100%;
 }
 
+.nav-link:hover {
+    color: var(--color-secondary) !important;
+}
+
 .nav-actions {
     display: flex;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
 }
 
