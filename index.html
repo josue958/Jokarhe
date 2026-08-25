@@ -5,56 +5,831 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO Meta Tags -->
-    <title>Jokarhe Systems - Transformación Digital e Innovación</title>
+    <title>JOKARHE CORE | Sistema Educativo para Docentes</title>
+
     <meta name="description"
-        content="Desarrollo de software personalizado, automatización de procesos e implementación de soluciones tecnológicas que impulsan el crecimiento de escuelas, empresas y organizaciones.">
+        content="JOKARHE CORE es un sistema educativo desarrollado por docentes para docentes. Gestiona alumnos, grupos, asistencia, evaluación, PDA, equipos, conducta y reportes desde una sola aplicación. Funciona sin internet en Windows y Mac.">
+
     <meta name="keywords"
-        content="desarrollo de software, automatización, IA, tecnología educativa, Jokarhe Systems, innovación">
+        content="Jokarhe Core, sistema para docentes, software educativo, sistema escolar, asistencia docente, evaluación docente, PDA, NEM, programa para maestros, software para profesores">
+
     <meta name="robots" content="index, follow">
+
     <link rel="canonical" href="https://josue958.github.io/Jokarhe/">
 
-    <!-- Open Graph / Social Media -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Jokarhe Systems - Transformación Digital e Innovación">
+    <meta property="og:title" content="JOKARHE CORE | Sistema Educativo para Docentes">
     <meta property="og:description"
-        content="Software a la medida y sistemas inteligentes para impulsar tu organización.">
+        content="Una herramienta desarrollada por docentes para docentes. Organiza tus grupos, alumnos, asistencia, evaluación y seguimiento académico desde una sola aplicación.">
     <meta property="og:url" content="https://josue958.github.io/Jokarhe/">
     <meta property="og:image" content="Documentos/Logo/Identidad%20Visual.png">
 
-    <!-- Styles & Fonts -->
     <link rel="stylesheet" href="styles.css">
-    <!-- Using Google Fonts similar to Calibri / Segoe UI for wider web support if needed, but keeping CSS font-family rules primarily for local fonts -->
 
-    <!-- Schema.org JSON-LD -->
+    <!-- Estilos específicos de la nueva landing -->
+    <style>
+
+        /* =========================================================
+           CORE LANDING
+        ========================================================= */
+
+        :root {
+            --core-blue: #0b2342;
+            --core-blue-light: #123d70;
+            --core-cyan: #00b8d8;
+            --core-green: #18c77a;
+            --core-gold: #f5b82e;
+            --core-bg: #f6f8fb;
+            --core-dark: #101828;
+            --core-gray: #667085;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .core-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: rgba(0, 184, 216, .10);
+            border: 1px solid rgba(0, 184, 216, .25);
+            color: var(--core-cyan);
+            font-weight: 700;
+            font-size: .85rem;
+            margin-bottom: 20px;
+        }
+
+        .core-badge span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--core-green);
+            box-shadow: 0 0 10px rgba(24,199,122,.7);
+        }
+
+        .hero-core {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(0,184,216,.16), transparent 35%),
+                radial-gradient(circle at 10% 80%, rgba(18,61,112,.18), transparent 35%),
+                var(--core-blue);
+            color: white;
+            padding: 100px 0 60px;
+        }
+
+        .hero-core .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-core-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-core h1 {
+            font-size: clamp(2.5rem, 5vw, 4.8rem);
+            line-height: 1.03;
+            margin: 0 0 25px;
+            letter-spacing: -2px;
+        }
+
+        .hero-core h1 span {
+            color: var(--core-cyan);
+        }
+
+        .hero-core p {
+            font-size: 1.18rem;
+            line-height: 1.7;
+            max-width: 680px;
+            color: rgba(255,255,255,.78);
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .btn-download {
+            background: var(--core-green) !important;
+            border-color: var(--core-green) !important;
+            color: #062c1d !important;
+            font-weight: 800;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(24,199,122,.25);
+        }
+
+        .hero-note {
+            margin-top: 18px;
+            font-size: .85rem !important;
+            color: rgba(255,255,255,.55) !important;
+        }
+
+        /* Mockup */
+        .core-screen {
+            position: relative;
+            background: #172438;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 18px;
+            padding: 10px;
+            box-shadow:
+                0 35px 80px rgba(0,0,0,.35),
+                0 0 80px rgba(0,184,216,.08);
+            transform: perspective(1200px) rotateY(-5deg) rotateX(2deg);
+        }
+
+        .core-screen img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .core-screen-placeholder {
+            min-height: 470px;
+            border-radius: 12px;
+            background:
+                linear-gradient(145deg,#18263a,#0d1727);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .core-screen-placeholder h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .core-screen-placeholder p {
+            font-size: 1rem;
+            color: rgba(255,255,255,.55);
+        }
+
+        /* Trust strip */
+        .trust-strip {
+            background: #071a2c;
+            color: white;
+            padding: 18px 0;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 20px;
+            text-align: center;
+        }
+
+        .trust-item {
+            font-size: .9rem;
+            color: rgba(255,255,255,.75);
+        }
+
+        .trust-item strong {
+            display: block;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 3px;
+        }
+
+        /* Section */
+        .core-section {
+            padding: 100px 0;
+        }
+
+        .core-section.light {
+            background: var(--core-bg);
+        }
+
+        .core-section.dark {
+            background: var(--core-blue);
+            color: white;
+        }
+
+        .core-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 55px;
+        }
+
+        .core-header h2 {
+            font-size: clamp(2rem,4vw,3.2rem);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .core-header p {
+            color: var(--core-gray);
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        .dark .core-header p {
+            color: rgba(255,255,255,.65);
+        }
+
+        /* Features */
+        .core-features {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 22px;
+        }
+
+        .core-feature {
+            padding: 30px;
+            border-radius: 18px;
+            background: white;
+            border: 1px solid #e5e9f0;
+            transition: .25s ease;
+        }
+
+        .core-feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(16,24,40,.08);
+        }
+
+        .core-feature-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(0,184,216,.10);
+            color: var(--core-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+        }
+
+        .core-feature h3 {
+            margin-bottom: 10px;
+            font-size: 1.15rem;
+        }
+
+        .core-feature p {
+            color: var(--core-gray);
+            line-height: 1.65;
+            font-size: .95rem;
+        }
+
+        /* Modules */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 16px;
+        }
+
+        .module {
+            background: rgba(255,255,255,.055);
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 14px;
+            padding: 22px;
+            transition: .25s ease;
+        }
+
+        .module:hover {
+            background: rgba(255,255,255,.09);
+            transform: translateY(-3px);
+        }
+
+        .module-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .module h3 {
+            margin: 0 0 7px;
+            font-size: 1rem;
+        }
+
+        .module p {
+            margin: 0;
+            color: rgba(255,255,255,.58);
+            font-size: .86rem;
+            line-height: 1.5;
+        }
+
+        /* Offline */
+        .offline-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .offline-content h2 {
+            font-size: clamp(2rem,4vw,3rem);
+            margin-bottom: 20px;
+        }
+
+        .offline-content p {
+            color: var(--core-gray);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .offline-list {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0 0;
+        }
+
+        .offline-list li {
+            padding: 10px 0;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .offline-list span {
+            color: var(--core-green);
+            font-weight: 900;
+        }
+
+        .offline-card {
+            padding: 40px;
+            border-radius: 25px;
+            background:
+                linear-gradient(145deg,#0c2849,#071a2c);
+            color: white;
+            box-shadow: 0 25px 60px rgba(7,26,44,.18);
+        }
+
+        .offline-card .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(24,199,122,.12);
+            border: 1px solid rgba(24,199,122,.25);
+            border-radius: 20px;
+            color: #57e29f;
+            font-size: .8rem;
+            font-weight: 700;
+        }
+
+        .offline-card h3 {
+            font-size: 2rem;
+            margin: 25px 0 12px;
+        }
+
+        .offline-card p {
+            color: rgba(255,255,255,.65);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .price-card {
+            background: white;
+            border: 1px solid #e4e8ef;
+            border-radius: 20px;
+            padding: 30px 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--core-cyan);
+            box-shadow: 0 20px 55px rgba(0,184,216,.13);
+            transform: translateY(-8px);
+        }
+
+        .popular {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--core-cyan);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .price-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .price-description {
+            color: var(--core-gray);
+            font-size: .87rem;
+            min-height: 45px;
+        }
+
+        .price-list {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            flex: 1;
+        }
+
+        .price-list li {
+            padding: 8px 0;
+            font-size: .9rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .price-list li::before {
+            content: "✓";
+            color: var(--core-green);
+            font-weight: 900;
+        }
+
+        .price-limit {
+            padding: 12px;
+            border-radius: 10px;
+            background: #f4f7fa;
+            font-size: .85rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .price-btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Download */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .download-card {
+            background: white;
+            border: 1px solid #e2e7ee;
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: .25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(16,24,40,.08);
+        }
+
+        .download-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .download-card h3 {
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .download-card p {
+            color: var(--core-gray);
+            font-size: .9rem;
+            margin-bottom: 22px;
+            min-height: 48px;
+        }
+
+        .download-badge-arch {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            background: #eef2f6;
+            color: var(--core-blue);
+            border-radius: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        /* Installation */
+        .install-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .install-card {
+            background: white;
+            border: 1px solid #e4e8ef;
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .install-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+        }
+
+        .install-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .install-number {
+            flex: 0 0 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--core-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .85rem;
+        }
+
+        .install-step p {
+            margin: 0;
+            color: var(--core-gray);
+            line-height: 1.5;
+            font-size: .9rem;
+        }
+
+        /* Purchase */
+        .purchase {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0,184,216,.15), transparent 35%),
+                var(--core-blue);
+            color: white;
+            text-align: center;
+        }
+
+        .purchase-box {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .purchase h2 {
+            font-size: clamp(2rem,4vw,3.3rem);
+            margin-bottom: 15px;
+        }
+
+        .purchase > .container > .purchase-box > p {
+            color: rgba(255,255,255,.68);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .purchase-steps {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
+            margin: 45px 0;
+        }
+
+        .purchase-step {
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.045);
+            border-radius: 15px;
+        }
+
+        .purchase-step-number {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--core-cyan);
+            color: white;
+            font-weight: 900;
+        }
+
+        .purchase-step h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .purchase-step p {
+            margin: 0;
+            color: rgba(255,255,255,.58);
+            font-size: .86rem;
+            line-height: 1.5;
+        }
+
+        .whatsapp-btn {
+            background: #25D366 !important;
+            border-color: #25D366 !important;
+            color: white !important;
+            font-weight: 800;
+            padding: 15px 28px;
+        }
+
+        /* Teacher message */
+        .teacher-message {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .teacher-message .quote-mark {
+            font-size: 5rem;
+            line-height: .5;
+            color: var(--core-cyan);
+            opacity: .5;
+        }
+
+        .teacher-message h2 {
+            font-size: clamp(2rem,4vw,3rem);
+            margin: 20px 0;
+        }
+
+        .teacher-message p {
+            color: var(--core-gray);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+
+        /* FAQ */
+        .core-faq {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .core-faq-item {
+            border-bottom: 1px solid #e3e7ed;
+        }
+
+        .core-faq-question {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            padding: 22px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--core-dark);
+        }
+
+        .core-faq-answer {
+            display: none;
+            padding: 0 0 22px;
+            color: var(--core-gray);
+            line-height: 1.7;
+        }
+
+        .core-faq-item.active .core-faq-answer {
+            display: block;
+        }
+
+        .core-faq-item.active .core-faq-question {
+            color: var(--core-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+
+            .hero-core-grid,
+            .offline-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .core-features {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .modules-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .core-screen {
+                transform: none;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+            .trust-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .hero-core {
+                min-height: auto;
+                padding: 90px 0 70px;
+            }
+
+            .hero-core-grid,
+            .core-features,
+            .modules-grid,
+            .pricing-grid,
+            .download-grid,
+            .install-grid,
+            .purchase-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .price-card.featured {
+                transform: none;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-core h1 {
+                letter-spacing: -1px;
+            }
+        }
+
+    </style>
+
+    <!-- Schema -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Jokarhe Systems",
-      "url": "https://josue958.github.io/Jokarhe/",
-      "logo": "https://josue958.github.io/Jokarhe/Documentos/Logo/Identidad%20Visual.png",
-      "description": "Transformamos personas, instituciones y empresas mediante sistemas inteligentes."
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "JOKARHE CORE",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Windows, macOS",
+        "description": "Sistema educativo desarrollado por docentes para docentes para gestionar alumnos, grupos, asistencia, evaluación, PDA, equipos, conducta y reportes.",
+        "brand": {
+            "@type": "Brand",
+            "name": "Jokarhe Systems"
+        }
     }
     </script>
+
 </head>
 
 <body>
 
-    <!-- 1. NAVBAR -->
+    <!-- =========================================================
+         NAVBAR
+    ========================================================== -->
+
     <nav class="navbar">
-        <a href="#" class="nav-logo">
-            <img src="Documentos/Logo/Logo_empressa.png" alt="Jokarhe Systems Logo"
-                style="height: 32px; width: auto; margin-right: 10px; border-radius: 4px;">
-            JOKARHE SYSTEMS
+
+        <a href="#inicio" class="nav-logo">
+            <img src="Documentos/Logo/Logo_empressa.png"
+                alt="Jokarhe Systems"
+                style="height:32px;width:auto;margin-right:10px;border-radius:4px;">
+            JOKARHE
         </a>
+
         <div class="nav-links">
-            <a href="#about" class="nav-link">Nosotros</a>
-            <a href="#services" class="nav-link">Servicios</a>
-            <a href="#product" class="nav-link">Productos</a>
-            <a href="#contact" class="nav-link">Contacto</a>
-            <a href="dosifica/index.html" class="btn btn-outline" style="margin-left: 20px;">Acceso a Clientes</a>
+            <a href="#core" class="nav-link">CORE</a>
+            <a href="#modulos" class="nav-link">Módulos</a>
+            <a href="#planes" class="nav-link">Planes</a>
+            <a href="#descargas" class="nav-link">Descargas</a>
+            <a href="#instalacion" class="nav-link">Instalación</a>
+
+            <a href="#comprar"
+               class="btn btn-primary"
+               style="margin-left:15px;">
+                Obtener CORE
+            </a>
         </div>
+
         <div class="nav-actions">
             <button class="mobile-menu-btn" aria-label="Abrir menú">
                 <span></span>
@@ -62,616 +837,1431 @@
                 <span></span>
             </button>
         </div>
+
     </nav>
 
-    <!-- 2. HERO -->
-    <section class="hero" id="home">
-        <div class="hero-bg">
-            <div class="hero-bg-shape"></div>
-            <div class="hero-bg-shape"></div>
-        </div>
 
-        <div class="container hero-content">
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
 
+    <section class="hero-core" id="inicio">
 
-            <img src="Documentos/Logo/Logo_empressa.png" alt="Jokarhe Systems Logo"
-                style="height: 400px; width: auto; display: block; margin: 0 auto 20px auto; border-radius: 4px;">
+        <div class="container hero-core-grid">
 
-            <div class="hero-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                Innovación tecnológica 2026
-            </div>
-            <h1 class="hero-title">Transformamos la educación y las empresas mediante <span
-                    class="gradient-text">sistemas inteligentes.</span></h1>
-            <p class="hero-subtitle">Desarrollamos software personalizado, automatizamos procesos e implementamos
-                soluciones tecnológicas que impulsan el crecimiento de tu organización.</p>
-            <div class="hero-cta">
-                <a href="#contact" class="btn btn-primary">Solicitar Información</a>
-                <a href="#services" class="btn btn-outline">Ver soluciones</a>
-            </div>
-        </div>
-    </section>
+            <div>
 
-    <!-- 3. SOBRE NOSOTROS -->
-    <section class="section about" id="about">
-        <div class="container about-grid">
-            <div class="about-image reveal-left">
-                <!-- Placeholder elegante -->
-                <div
-                    style="background: linear-gradient(135deg, #071A2C, #0F4C81); height: 400px; display:flex; align-items:center; justify-content:center; color:white;">
-                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="1.5">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                        <polyline points="2 17 12 22 22 17"></polyline>
-                        <polyline points="2 12 12 17 22 12"></polyline>
-                    </svg>
+                <div class="core-badge">
+                    <span></span>
+                    JOKARHE CORE v1.4.75
                 </div>
-            </div>
-            <div class="about-content reveal-right">
-                <h2 class="section-title">Sobre Nosotros</h2>
-                <p>Nuestra historia comienza con una visión clara: cerrar la brecha entre la complejidad técnica y las
-                    necesidades operativas reales. En <strong>Jokarhe Systems</strong>, entendemos que la tecnología es
-                    un medio, no un fin.</p>
 
-                <h3>Misión</h3>
-                <p>Proveer herramientas digitales accesibles, intuitivas y poderosas que automaticen tareas repetitivas
-                    y permitan a los profesionales enfocarse en lo que realmente importa.</p>
+                <h1>
+                    Tu trabajo docente.
+                    <span>En un solo lugar.</span>
+                </h1>
 
-                <h3>Visión y Valores</h3>
-                <p>Aspiramos a ser líderes en la transformación digital de instituciones en Latinoamérica, cimentados en
-                    la <strong>Innovación</strong>, el <strong>Profesionalismo</strong> y la <strong>Confianza</strong>.
+                <p>
+                    JOKARHE CORE es un sistema educativo desarrollado
+                    <strong>por docentes para docentes</strong>.
+                    Organiza alumnos, grupos, asistencia, evaluación,
+                    PDA, equipos, conducta y reportes desde una sola aplicación.
                 </p>
-            </div>
-        </div>
-    </section>
 
-    <!-- 4. ¿POR QUÉ ELEGIRNOS? -->
-    <section class="section why-us">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">¿Por qué elegirnos?</h2>
-                <p class="section-subtitle">Diferenciadores clave que nos hacen el socio tecnológico ideal para tu
-                    organización.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card reveal">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                        </svg></div>
-                    <h3 class="feature-title">Innovación</h3>
-                    <p class="feature-desc">Integramos las últimas tecnologías de vanguardia para asegurar que tu
-                        sistema nunca quede obsoleto.</p>
-                </div>
-                <div class="feature-card reveal" style="transition-delay: 0.1s;">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg></div>
-                    <h3 class="feature-title">Software a la Medida</h3>
-                    <p class="feature-desc">No usamos plantillas genéricas. Cada línea de código está diseñada para
-                        resolver tus problemas específicos.</p>
-                </div>
-                <div class="feature-card reveal" style="transition-delay: 0.2s;">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg></div>
-                    <h3 class="feature-title">Automatización</h3>
-                    <p class="feature-desc">Reducimos el tiempo invertido en tareas repetitivas hasta en un 80% mediante
-                        algoritmos inteligentes.</p>
-                </div>
-                <div class="feature-card reveal" style="transition-delay: 0.3s;">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                        </svg></div>
-                    <h3 class="feature-title">Experiencia Docente</h3>
-                    <p class="feature-desc">Conocemos el sector educativo desde adentro, lo que nos permite crear
-                        software que maestros y directores realmente aman usar.</p>
-                </div>
-                <div class="feature-card reveal" style="transition-delay: 0.4s;">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg></div>
-                    <h3 class="feature-title">Soporte Premium</h3>
-                    <p class="feature-desc">Acompañamiento constante y resoluciones rápidas para que tu operación nunca
-                        se detenga.</p>
-                </div>
-                <div class="feature-card reveal" style="transition-delay: 0.5s;">
-                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                        </svg></div>
-                    <h3 class="feature-title">Escalabilidad</h3>
-                    <p class="feature-desc">Sistemas diseñados en la nube que crecen de la mano con las exigencias de tu
-                        empresa.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="hero-buttons">
 
-    <!-- 5. NUESTROS SERVICIOS -->
-    <section class="section services" id="services">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Nuestros Servicios</h2>
-                <p class="section-subtitle">Soluciones modulares diseñadas para cada tipo de industria.</p>
-            </div>
-            <div class="services-grid">
-                <div class="service-card reveal">
-                    <div class="service-icon">🏫</div>
-                    <h3>Software Escolar</h3>
-                    <p>Plataformas de gestión académica, control escolar, asistencia y evaluación automatizada.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.1s;">
-                    <div class="service-icon">🏢</div>
-                    <h3>Software Empresarial</h3>
-                    <p>ERPs, CRMs y paneles de administración de recursos para PyMES y grandes corporativos.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.2s;">
-                    <div class="service-icon">📱</div>
-                    <h3>Aplicaciones Móviles</h3>
-                    <p>Apps nativas e híbridas con interfaces fluidas e intuitivas (iOS y Android).</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.3s;">
-                    <div class="service-icon">⚡</div>
-                    <h3>Automatización</h3>
-                    <p>Sincronización de bases de datos, web scraping y automatización robótica de procesos.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.4s;">
-                    <div class="service-icon">🧠</div>
-                    <h3>Inteligencia Artificial</h3>
-                    <p>Integración de modelos predictivos y chatbots inteligentes a tu flujo de trabajo.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.5s;">
-                    <div class="service-icon">🌐</div>
-                    <h3>Desarrollo Web</h3>
-                    <p>Landing pages de alta conversión, SPAs y sitios corporativos ultra rápidos.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.6s;">
-                    <div class="service-icon">📊</div>
-                    <h3>Consultoría Tecnológica</h3>
-                    <p>Auditoría de sistemas, mejora continua de TI y digitalización de procesos físicos.</p>
-                </div>
-                <div class="service-card reveal" style="transition-delay: 0.7s;">
-                    <div class="service-icon">🎓</div>
-                    <h3>Capacitación</h3>
-                    <p>Talleres en alfabetización digital para asegurar la adopción tecnológica en tu equipo.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <a href="#descargas"
+                       class="btn btn-primary btn-download">
+                        Descargar CORE
+                    </a>
 
-    <!-- 6. PRODUCTO DESTACADO -->
-    <section class="section product" id="product">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Producto Destacado: <span style="color:var(--color-secondary);">Planeador
-                        NEM</span></h2>
-                <p class="section-subtitle">Sistema Integral para Docentes. La herramienta definitiva para la nueva
-                    escuela mexicana.</p>
+                    <a href="#planes"
+                       class="btn btn-outline"
+                       style="color:white;border-color:rgba(255,255,255,.35);">
+                        Ver planes
+                    </a>
+
+                </div>
+
+                <p class="hero-note">
+                    ✓ Windows &nbsp;&nbsp; ✓ macOS (Apple Silicon e Intel) &nbsp;&nbsp;
+                    ✓ Trabajo sin internet &nbsp;&nbsp; ✓ Datos locales
+                </p>
+
             </div>
 
-            <div class="product-grid">
-                <div class="product-features reveal-left">
-                    <div class="product-feature-item">
-                        <div class="product-feature-icon"><svg viewBox="0 0 24 24" fill="none">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-width="2" stroke-linecap="round" />
-                                <polyline points="22 4 12 14.01 9 11.01" stroke-width="2" stroke-linecap="round" />
-                            </svg></div>
-                        <div>
-                            <h4>Planeaciones y PDA</h4>
-                            <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Diseño y dosificación
-                                automatizada de Procesos de Desarrollo de Aprendizaje.</p>
+
+            <div class="core-screen">
+
+                <div class="core-screen-placeholder">
+
+                    <div>
+
+                        <div style="font-size:4rem;margin-bottom:20px;">
+                            📊
                         </div>
-                    </div>
-                    <div class="product-feature-item">
-                        <div class="product-feature-icon"><svg viewBox="0 0 24 24" fill="none">
-                                <path d="M12 20v-6M6 20V10M18 20V4" stroke-width="2" stroke-linecap="round" />
-                            </svg></div>
-                        <div>
-                            <h4>Evaluación y Asistencia</h4>
-                            <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Control continuo con reportes
-                                estadísticos e indicadores automáticos.</p>
-                        </div>
-                    </div>
-                    <div class="product-feature-item">
-                        <div class="product-feature-icon"><svg viewBox="0 0 24 24" fill="none">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-width="2"
-                                    stroke-linecap="round" />
-                            </svg></div>
-                        <div>
-                            <h4>Trabajo Offline Ininterrumpido</h4>
-                            <p style="color: rgba(255,255,255,0.7); font-size: 0.95rem;">Guarda tus avances sin internet
-                                y sincroniza con la nube posteriormente.</p>
-                        </div>
-                    </div>
 
-                    <div style="margin-top: 20px;">
-                        <a href="dosifica/index.html" class="btn btn-outline"
-                            style="color: white; border-color: rgba(255,255,255,0.3);">Probar Planeador ➔</a>
-                    </div>
-                </div>
+                        <h3>
+                            JOKARHE CORE
+                        </h3>
 
-                <div class="product-mockup reveal-right">
-                    <div class="mockup-frame">
-                        <div class="mockup-screen">
-                            <div class="mockup-header">
-                                <div class="mockup-dot"></div>
-                                <div class="mockup-dot"></div>
-                                <div class="mockup-dot"></div>
-                            </div>
-                            <div class="mockup-body">
-                                <div class="mockup-sidebar">
-                                    <div
-                                        style="height: 10px; background: rgba(0,0,0,0.1); border-radius: 4px; margin-bottom: 20px; width: 80%;">
-                                    </div>
-                                    <div
-                                        style="height: 30px; background: rgba(0,0,0,0.05); border-radius: 4px; margin-bottom: 10px;">
-                                    </div>
-                                    <div
-                                        style="height: 30px; background: rgba(0,0,0,0.05); border-radius: 4px; margin-bottom: 10px;">
-                                    </div>
-                                    <div style="height: 30px; background: rgba(0,0,0,0.05); border-radius: 4px;"></div>
-                                </div>
-                                <div class="mockup-content" style="padding: 15px;">
-                                    <div
-                                        style="height: 20px; background: var(--color-primary); border-radius: 4px; margin-bottom: 20px; width: 40%;">
-                                    </div>
-                                    <div
-                                        style="height: 150px; background: rgba(0,180,216,0.1); border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--color-secondary);">
-                                    </div>
-                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                        <div
-                                            style="height: 80px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                                        </div>
-                                        <div
-                                            style="height: 80px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. BENEFICIOS (Comparativa) -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">El impacto de la digitalización</h2>
-                <p class="section-subtitle">¿Por qué mantener sistemas arcaicos cuando puedes operar a la velocidad de
-                    la luz?</p>
-            </div>
-
-            <div class="comparison-grid">
-                <div class="comp-card traditional reveal-left">
-                    <div class="comp-header">
-                        <span style="font-size: 2rem;">📦</span> Métodos Tradicionales
-                    </div>
-                    <ul class="comp-list trad">
-                        <li>Llenado manual de Excel y Word repetitivos.</li>
-                        <li>Pérdida de información en archivos locales.</li>
-                        <li>Horas invertidas en calcular estadísticas.</li>
-                        <li>Sistemas genéricos que no se adaptan a ti.</li>
-                        <li>Errores humanos constantes.</li>
-                    </ul>
-                </div>
-
-                <div class="comp-card modern reveal-right">
-                    <div class="comp-header">
-                        <span style="font-size: 2rem;">🚀</span> Jokarhe Systems
-                    </div>
-                    <ul class="comp-list mod">
-                        <li>Flujos de trabajo 100% automatizados.</li>
-                        <li>Sincronización en la nube y respaldos automáticos.</li>
-                        <li>Dashboards con métricas en tiempo real.</li>
-                        <li>Software construido a la medida de tu institución.</li>
-                        <li>Márgenes de error reducidos a cero.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. PROCESO DE TRABAJO -->
-    <section class="section process">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Nuestro Proceso</h2>
-                <p class="section-subtitle">Una metodología comprobada desde la idea hasta el despliegue.</p>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item reveal">
-                    <div class="timeline-icon">1</div>
-                    <div class="timeline-content">
-                        <h4>Descubrimiento y Planeación</h4>
-                        <p>Analizamos tus procesos actuales, identificamos cuellos de botella y diseñamos la
-                            arquitectura técnica perfecta para tu necesidad.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-icon">2</div>
-                    <div class="timeline-content">
-                        <h4>Diseño UX/UI</h4>
-                        <p>Creamos prototipos interactivos enfocados en la experiencia de usuario, garantizando que el
-                            sistema final sea intuitivo y elegante.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-icon">3</div>
-                    <div class="timeline-content">
-                        <h4>Desarrollo Iterativo</h4>
-                        <p>Programamos el software entregando avances modulares, permitiéndote probar y validar el
-                            progreso continuamente.</p>
-                    </div>
-                </div>
-                <div class="timeline-item reveal">
-                    <div class="timeline-icon">4</div>
-                    <div class="timeline-content">
-                        <h4>Implementación y Capacitación</h4>
-                        <p>Desplegamos el sistema en tus servidores y capacitamos a todo tu equipo para asegurar una
-                            transición suave.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. ESTADÍSTICAS -->
-    <section class="stats">
-        <div class="container stats-grid">
-            <div class="stat-item reveal">
-                <div class="stat-number" data-target="150">0</div>
-                <div class="stat-label">Instituciones Atendidas</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay: 0.1s;">
-                <div class="stat-number" data-target="15000">0</div>
-                <div class="stat-label">Usuarios Activos</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay: 0.2s;">
-                <div class="stat-number" data-target="500000">0</div>
-                <div class="stat-label">Horas Ahorradas</div>
-            </div>
-            <div class="stat-item reveal" style="transition-delay: 0.3s;">
-                <div class="stat-number" data-target="320">0</div>
-                <div class="stat-label">Proyectos Exitosos</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 10. TESTIMONIOS -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Lo que dicen de nosotros</h2>
-                <p class="section-subtitle">Casos de éxito reales que validan nuestra tecnología.</p>
-            </div>
-
-            <div class="testimonials reveal">
-                <div class="carousel">
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p class="test-text">"El Planeador NEM ha transformado por completo la forma en que nuestro
-                            colegio maneja las evaluaciones. Nos ha devuelto horas valiosas de nuestro fin de semana."
+                        <p>
+                            Gestión docente integral
                         </p>
-                        <div class="test-author">
-                            <div class="test-avatar">M</div>
-                            <div class="test-info">
-                                <h5>Mtra. Laura Gutiérrez</h5>
-                                <p>Directora Académica</p>
-                            </div>
-                        </div>
+
                     </div>
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p class="test-text">"Automatizar nuestros reportes de incidencias con Jokarhe Systems fue la
-                            mejor inversión del año. El sistema es increíblemente rápido y muy elegante."</p>
-                        <div class="test-author">
-                            <div class="test-avatar">R</div>
-                            <div class="test-info">
-                                <h5>Roberto Sánchez</h5>
-                                <p>Gerente de Operaciones</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <div class="stars">★★★★★</div>
-                        <p class="test-text">"Soporte inmediato y una curva de aprendizaje mínima. Nunca había visto un
-                            equipo de desarrollo tan comprometido con entender nuestro problema de raíz."</p>
-                        <div class="test-author">
-                            <div class="test-avatar">C</div>
-                            <div class="test-info">
-                                <h5>Carlos Almeida</h5>
-                                <p>Fundador de EduTech</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- 11. FAQ -->
-    <section class="section process">
+
+    <!-- =========================================================
+         TRUST STRIP
+    ========================================================== -->
+
+    <section class="trust-strip">
+
+        <div class="container trust-grid">
+
+            <div class="trust-item">
+                <strong>100% Local-first</strong>
+                Trabaja sin internet
+            </div>
+
+            <div class="trust-item">
+                <strong>Windows + macOS</strong>
+                Disponible para escritorio
+            </div>
+
+            <div class="trust-item">
+                <strong>Diseñado para docentes</strong>
+                Pensado desde la práctica real
+            </div>
+
+            <div class="trust-item">
+                <strong>Modular</strong>
+                Crece contigo
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         QUÉ ES CORE
+    ========================================================== -->
+
+    <section class="core-section" id="core">
+
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Preguntas Frecuentes</h2>
+
+            <div class="core-header">
+
+                <h2>
+                    Mucho más que una lista de alumnos
+                </h2>
+
+                <p>
+                    CORE conecta la información que generas diariamente
+                    para evitar que tengas que repetir el mismo trabajo
+                    en diferentes archivos y aplicaciones.
+                </p>
+
             </div>
 
-            <div class="faq-list reveal">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿Trabajan únicamente con el sector educativo?
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p><br>No, aunque tenemos una fuerte presencia en herramientas escolares (como el Planeador
-                            NEM), desarrollamos software empresarial, CRMs, y aplicaciones para diversas industrias.</p>
-                    </div>
+
+            <div class="core-features">
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">👥</div>
+
+                    <h3>
+                        Tus alumnos organizados
+                    </h3>
+
+                    <p>
+                        Administra alumnos, grupos y materias
+                        desde una estructura centralizada.
+                    </p>
+
                 </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿Cuánto tiempo toma desarrollar una solución a la medida?
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p><br>Depende de la complejidad. Una automatización simple puede tomar 2 a 3 semanas, mientras
-                            que un sistema ERP completo puede llevar de 3 a 6 meses.</p>
-                    </div>
+
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">✅</div>
+
+                    <h3>
+                        Asistencia rápida
+                    </h3>
+
+                    <p>
+                        Registra asistencia, faltas y retardos
+                        sin depender de hojas de cálculo.
+                    </p>
+
                 </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        ¿Ofrecen soporte después del lanzamiento?
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p><br>Sí. Incluimos periodos de garantía y ofrecemos pólizas de mantenimiento y soporte mensual
-                            para garantizar que tu sistema opere al 100% siempre.</p>
-                    </div>
+
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">📝</div>
+
+                    <h3>
+                        Evaluación
+                    </h3>
+
+                    <p>
+                        Lleva el seguimiento de las evaluaciones
+                        y resultados de tus estudiantes.
+                    </p>
+
                 </div>
+
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">🎯</div>
+
+                    <h3>
+                        Seguimiento PDA
+                    </h3>
+
+                    <p>
+                        Vincula tu trabajo curricular con el
+                        seguimiento de los Procesos de Desarrollo de Aprendizaje.
+                    </p>
+
+                </div>
+
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">🤝</div>
+
+                    <h3>
+                        Trabajo colaborativo
+                    </h3>
+
+                    <p>
+                        Organiza equipos y utiliza dinámicas
+                        colaborativas dentro de tus grupos.
+                    </p>
+
+                </div>
+
+
+                <div class="core-feature">
+
+                    <div class="core-feature-icon">📊</div>
+
+                    <h3>
+                        Información útil
+                    </h3>
+
+                    <p>
+                        Convierte los datos de tu trabajo diario
+                        en reportes y concentrados.
+                    </p>
+
+                </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- 12. CTA -->
-    <section class="cta reveal">
+
+    <!-- =========================================================
+         MÓDULOS
+    ========================================================== -->
+
+    <section class="core-section dark" id="modulos">
+
         <div class="container">
-            <h2>Comienza hoy la transformación digital de tu institución.</h2>
-            <p>Deja atrás los procesos manuales y únete a las organizaciones que operan en el futuro.</p>
-            <a href="#contact" class="btn btn-outline"
-                style="color: white; border-color: white; padding: 16px 32px; font-size: 1.1rem;">Solicitar
-                información</a>
-        </div>
-    </section>
 
-    <!-- 13. CONTACTO Y FOOTER -->
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Contáctanos</h2>
-                <p class="section-subtitle">¿Listo para llevar tu proyecto al siguiente nivel? Hablemos.</p>
+            <div class="core-header">
+
+                <h2>
+                    Todo lo que necesitas para tu trabajo docente
+                </h2>
+
+                <p>
+                    CORE está construido de forma modular para que
+                    cada función forme parte de un mismo ecosistema.
+                </p>
+
             </div>
 
-            <div style="max-width: 500px; margin: 0 auto;" class="reveal">
-                <div class="contact-form-container"
-                    style="display: flex; align-items: center; justify-content: center; padding: 40px; background: rgba(0, 184, 216, 0.05); border-radius: 12px; border: 1px solid rgba(0, 184, 216, 0.1);">
-                    <div style="text-align: center;">
-                        <svg viewBox="0 0 24 24"
-                            style="width: 64px; height: 64px; color: #25D366; margin-bottom: 20px;">
-                            <path fill="currentColor"
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                        </svg>
-                        <h3 style="margin-bottom: 10px;">Comunícate con un asesor</h3>
-                        <p style="margin-bottom: 25px; color: var(--text-secondary);">Resolveremos todas tus dudas y
-                            prepararemos una propuesta a tu medida.</p>
-                        <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n."
-                            target="_blank" class="btn btn-primary"
-                            style="background-color: #25D366; border-color: #25D366; width: 100%; display: inline-block;">
-                            Iniciar Chat en WhatsApp
-                        </a>
-                    </div>
+
+            <div class="modules-grid">
+
+                <div class="module">
+                    <div class="module-icon">🏠</div>
+                    <h3>Inicio</h3>
+                    <p>Acceso rápido a la información relevante del día.</p>
                 </div>
+
+                <div class="module">
+                    <div class="module-icon">👨‍🎓</div>
+                    <h3>Alumnos</h3>
+                    <p>Administra la información de tus estudiantes.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">🏫</div>
+                    <h3>Grupos</h3>
+                    <p>Organiza grupos, materias y estructura académica.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">✅</div>
+                    <h3>Asistencia</h3>
+                    <p>Registra asistencia, faltas y retardos.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">📝</div>
+                    <h3>Evaluación</h3>
+                    <p>Gestiona el seguimiento y evaluación de alumnos.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">🎯</div>
+                    <h3>Seguimiento PDA</h3>
+                    <p>Relaciona tu trabajo con los procesos de aprendizaje.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">📊</div>
+                    <h3>Reportes</h3>
+                    <p>Obtén información concentrada de tus grupos.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">⚠️</div>
+                    <h3>Conducta</h3>
+                    <p>Registra y consulta el comportamiento de los estudiantes.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">🤝</div>
+                    <h3>Equipos</h3>
+                    <p>Organiza dinámicas y actividades colaborativas.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">🚨</div>
+                    <h3>Incidentes</h3>
+                    <p>Registra situaciones relevantes de tus alumnos.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">⚙️</div>
+                    <h3>Configuración</h3>
+                    <p>Personaliza ciclos, grupos y funcionamiento del sistema.</p>
+                </div>
+
+                <div class="module">
+                    <div class="module-icon">🔐</div>
+                    <h3>Licencia</h3>
+                    <p>Gestiona el acceso y evolución de tu sistema.</p>
+                </div>
+
             </div>
+
         </div>
+
     </section>
 
-    <!-- FOOTER -->
+
+    <!-- =========================================================
+         OFFLINE FIRST
+    ========================================================== -->
+
+    <section class="core-section light">
+
+        <div class="container offline-grid">
+
+            <div class="offline-content">
+
+                <h2>
+                    ¿Sin internet?
+                    <br>
+                    <span style="color:var(--core-cyan);">
+                        No hay problema.
+                    </span>
+                </h2>
+
+                <p>
+                    CORE fue diseñado con una filosofía
+                    <strong>100% local-first</strong>.
+                    Tu trabajo no debe detenerse porque la conexión
+                    a internet falle.
+                </p>
+
+                <ul class="offline-list">
+
+                    <li>
+                        <span>✓</span>
+                        Trabaja sin conexión a internet.
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        Tus datos permanecen localmente.
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        Realiza respaldos de tu información.
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        La sincronización puede incorporarse según tu plan.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="offline-card">
+
+                <div class="status">
+                    ● SISTEMA LOCAL ACTIVO
+                </div>
+
+                <h3>
+                    Tu información.
+                    <br>
+                    En tu equipo.
+                </h3>
+
+                <p>
+                    CORE está pensado para que puedas trabajar
+                    incluso cuando no tengas conexión.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         PLANES
+    ========================================================== -->
+
+    <section class="core-section light" id="planes">
+
+        <div class="container">
+
+            <div class="core-header">
+
+                <h2>
+                    Elige el plan que necesitas
+                </h2>
+
+                <p>
+                    Comienza con lo necesario y aumenta las capacidades
+                    de CORE conforme crezcan tus necesidades docentes.
+                </p>
+
+            </div>
+
+
+            <div class="pricing-grid">
+
+
+                <!-- FREE -->
+
+                <div class="price-card">
+
+                    <div class="price-name">
+                        Free
+                    </div>
+
+                    <div class="price-description">
+                        Para comenzar a organizar tu trabajo docente.
+                    </div>
+
+                    <div class="price-limit">
+                        Hasta 3 grupos · 40 alumnos
+                    </div>
+
+                    <ul class="price-list">
+
+                        <li>Alumnos</li>
+                        <li>Grupos</li>
+                        <li>Asistencia</li>
+                        <li>Evaluación básica</li>
+                        <li>Configuración</li>
+
+                    </ul>
+
+                    <a href="#descargas"
+                       class="btn btn-outline price-btn">
+                        Comenzar gratis
+                    </a>
+
+                </div>
+
+
+                <!-- BÁSICO -->
+
+                <div class="price-card">
+
+                    <div class="price-name">
+                        Básico
+                    </div>
+
+                    <div class="price-description">
+                        Para docentes que necesitan mayor capacidad.
+                    </div>
+
+                    <div class="price-limit">
+                        Hasta 10 grupos · 150 alumnos
+                    </div>
+
+                    <ul class="price-list">
+
+                        <li>Todo lo incluido en Free</li>
+                        <li>Mayor capacidad de alumnos</li>
+                        <li>Reportes</li>
+                        <li>Gestión ampliada de grupos</li>
+
+                    </ul>
+
+                    <a href="#comprar"
+                       class="btn btn-outline price-btn">
+                        Solicitar licencia
+                    </a>
+
+                </div>
+
+
+                <!-- PREMIUM -->
+
+                <div class="price-card featured">
+
+                    <div class="popular">
+                        MÁS CAPACIDAD
+                    </div>
+
+                    <div class="price-name">
+                        Premium
+                    </div>
+
+                    <div class="price-description">
+                        Para docentes que quieren aprovechar CORE al máximo.
+                    </div>
+
+                    <div class="price-limit">
+                        Grupos y alumnos ilimitados
+                    </div>
+
+                    <ul class="price-list">
+
+                        <li>Todo lo incluido en Básico</li>
+                        <li>Grupos ilimitados</li>
+                        <li>Alumnos ilimitados</li>
+                        <li>Evaluación avanzada</li>
+                        <li>Sincronización</li>
+
+                    </ul>
+
+                    <a href="#comprar"
+                       class="btn btn-primary price-btn">
+                        Solicitar licencia
+                    </a>
+
+                </div>
+
+
+                <!-- ENTERPRISE -->
+
+                <div class="price-card">
+
+                    <div class="price-name">
+                        Enterprise
+                    </div>
+
+                    <div class="price-description">
+                        Para instituciones y necesidades avanzadas.
+                    </div>
+
+                    <div class="price-limit">
+                        Todas las capacidades
+                    </div>
+
+                    <ul class="price-list">
+
+                        <li>Todo lo incluido en Premium</li>
+                        <li>Capacidades completas</li>
+                        <li>Soluciones institucionales</li>
+                        <li>Soporte prioritario</li>
+                        <li>Atención personalizada</li>
+
+                    </ul>
+
+                    <a href="#comprar"
+                       class="btn btn-outline price-btn">
+                        Hablar con un asesor
+                    </a>
+
+                </div>
+
+            </div>
+
+            <p style="text-align:center;margin-top:30px;color:var(--core-gray);font-size:.85rem;">
+                Los planes y capacidades pueden evolucionar conforme se incorporen nuevas funciones a CORE.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         DESCARGAS
+    ========================================================== -->
+
+    <section class="core-section" id="descargas">
+
+        <div class="container">
+
+            <div class="core-header">
+
+                <h2>
+                    Descarga JOKARHE CORE
+                </h2>
+
+                <p>
+                    Instala la aplicación en tu computadora y comienza
+                    a trabajar. Selecciona la versión correspondiente
+                    a tu sistema operativo y arquitectura.
+                </p>
+
+            </div>
+
+
+            <div class="download-grid">
+
+                <!-- WINDOWS -->
+                <div class="download-card">
+
+                    <div>
+                        <div class="download-icon">
+                            🪟
+                        </div>
+
+                        <span class="download-badge-arch">Windows x64</span>
+
+                        <h3>
+                            Windows
+                        </h3>
+
+                        <p>
+                            Compatible con Windows 10 y 11 de 64 bits.
+                            Instalador ejecutable (.exe).
+                        </p>
+                    </div>
+
+                    <a href="https://drive.google.com/drive/folders/1EWxd3eNhXXIpIcVLbTSITU0IMKLwCm1d?usp=sharing"
+                       class="btn btn-primary"
+                       target="_blank"
+                       rel="noopener">
+                        Descargar para Windows
+                    </a>
+
+                </div>
+
+                <!-- MACOS APPLE SILICON -->
+                <div class="download-card">
+
+                    <div>
+                        <div class="download-icon">
+                            🍏
+                        </div>
+
+                        <span class="download-badge-arch">Apple Silicon (M1/M2/M3/M4)</span>
+
+                        <h3>
+                            macOS Apple Silicon
+                        </h3>
+
+                        <p>
+                            Optimizado para Mac con procesadores Apple Silicon (ARM64).
+                            Imagen de disco (.dmg).
+                        </p>
+                    </div>
+
+                    <a href="https://drive.google.com/drive/folders/1EWxd3eNhXXIpIcVLbTSITU0IMKLwCm1d?usp=sharing"
+                       class="btn btn-primary"
+                       target="_blank"
+                       rel="noopener">
+                        Descargar para Mac (Apple Silicon)
+                    </a>
+
+                </div>
+
+                <!-- MACOS INTEL -->
+                <div class="download-card">
+
+                    <div>
+                        <div class="download-icon">
+                            💻
+                        </div>
+
+                        <span class="download-badge-arch">Intel x64</span>
+
+                        <h3>
+                            macOS Intel
+                        </h3>
+
+                        <p>
+                            Compatible con Mac con procesadores Intel tradicionales (x64).
+                            Imagen de disco (.dmg).
+                        </p>
+                    </div>
+
+                    <a href="https://drive.google.com/drive/folders/1EWxd3eNhXXIpIcVLbTSITU0IMKLwCm1d?usp=sharing"
+                       class="btn btn-primary"
+                       target="_blank"
+                       rel="noopener">
+                        Descargar para Mac (Intel)
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         INSTALACIÓN
+    ========================================================== -->
+
+    <section class="core-section light" id="instalacion">
+
+        <div class="container">
+
+            <div class="core-header">
+
+                <h2>
+                    Instalar CORE es sencillo
+                </h2>
+
+                <p>
+                    Descarga la aplicación correspondiente a tu equipo
+                    y sigue los pasos.
+                </p>
+
+            </div>
+
+
+            <div class="install-grid">
+
+
+                <!-- WINDOWS -->
+
+                <div class="install-card">
+
+                    <h3>
+                        🪟 Instalación en Windows
+                    </h3>
+
+                    <div class="install-step">
+
+                        <div class="install-number">1</div>
+
+                        <p>
+                            Descarga el instalador de Windows desde la sección
+                            de descargas.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">2</div>
+
+                        <p>
+                            Abre el archivo
+                            <strong>Jokarhe-Core-Windows.exe</strong>.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">3</div>
+
+                        <p>
+                            Sigue las instrucciones del instalador
+                            y selecciona la ubicación de instalación.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">4</div>
+
+                        <p>
+                            Finaliza la instalación y abre JOKARHE CORE
+                            desde el acceso directo.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">5</div>
+
+                        <p>
+                            Si adquiriste una licencia, introduce los datos
+                            de activación proporcionados por Jokarhe Systems.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAC -->
+
+                <div class="install-card">
+
+                    <h3>
+                        🍏 Instalación en macOS
+                    </h3>
+
+                    <div class="install-step">
+
+                        <div class="install-number">1</div>
+
+                        <p>
+                            Descarga el archivo DMG correspondiente a tu tipo de Mac (Apple Silicon o Intel).
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">2</div>
+
+                        <p>
+                            Abre el archivo DMG descargado.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">3</div>
+
+                        <p>
+                            Arrastra JOKARHE CORE hacia la carpeta
+                            <strong>Aplicaciones</strong>.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">4</div>
+
+                        <p>
+                            Abre JOKARHE CORE desde Aplicaciones.
+                        </p>
+
+                    </div>
+
+                    <div class="install-step">
+
+                        <div class="install-number">5</div>
+
+                        <p>
+                            Si macOS muestra una advertencia de seguridad en el primer inicio,
+                            ve a <em>Ajustes del Sistema &gt; Privacidad y Seguridad</em> y pulsa en <strong>Abrir de todos modos</strong>.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         COMPRA
+    ========================================================== -->
+
+    <section class="core-section purchase" id="comprar">
+
+        <div class="container">
+
+            <div class="purchase-box">
+
+                <h2>
+                    ¿Quieres llevar CORE al siguiente nivel?
+                </h2>
+
+                <p>
+                    La contratación de una licencia se realiza directamente
+                    con nosotros. Así podemos orientarte sobre el plan adecuado,
+                    proporcionarte los datos de pago y activar tu licencia.
+                </p>
+
+
+                <div class="purchase-steps">
+
+
+                    <div class="purchase-step">
+
+                        <div class="purchase-step-number">
+                            1
+                        </div>
+
+                        <h3>
+                            Escríbenos por WhatsApp
+                        </h3>
+
+                        <p>
+                            Indícanos que deseas adquirir una licencia
+                            de JOKARHE CORE y el plan que te interesa.
+                        </p>
+
+                    </div>
+
+
+                    <div class="purchase-step">
+
+                        <div class="purchase-step-number">
+                            2
+                        </div>
+
+                        <h3>
+                            Recibe los datos de pago
+                        </h3>
+
+                        <p>
+                            Te enviaremos los datos para realizar
+                            la transferencia y los detalles de tu licencia.
+                        </p>
+
+                    </div>
+
+
+                    <div class="purchase-step">
+
+                        <div class="purchase-step-number">
+                            3
+                        </div>
+
+                        <h3>
+                            Activa tu licencia
+                        </h3>
+
+                        <p>
+                            Después de confirmar tu pago,
+                            recibirás la información necesaria
+                            para activar CORE.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20quiero%20informaci%C3%B3n%20para%20adquirir%20una%20licencia%20de%20JOKARHE%20CORE."
+                   target="_blank"
+                   rel="noopener"
+                   class="btn whatsapp-btn">
+
+                    💬 Solicitar licencia por WhatsApp
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         DOCENTES PARA DOCENTES
+    ========================================================== -->
+
+    <section class="core-section">
+
+        <div class="container">
+
+            <div class="teacher-message">
+
+                <div class="quote-mark">
+                    “
+                </div>
+
+                <h2>
+                    Hecho por docentes,
+                    <span style="color:var(--core-cyan);">
+                        para docentes.
+                    </span>
+                </h2>
+
+                <p>
+                    JOKARHE CORE nace de una necesidad real:
+                    hacer más sencillo el trabajo que realizamos
+                    todos los días frente a nuestros grupos.
+                </p>
+
+                <p>
+                    No buscamos crear otro programa lleno de funciones
+                    que nadie utiliza. Queremos construir una herramienta
+                    que realmente ayude al docente, que evolucione con sus
+                    necesidades y que permita recuperar tiempo para lo
+                    verdaderamente importante: <strong>enseñar.</strong>
+                </p>
+
+                <p>
+                    Cada licencia y cada usuario ayudan a que podamos
+                    continuar desarrollando nuevas funciones, mejorar
+                    las existentes y perfeccionar CORE.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FAQ
+    ========================================================== -->
+
+    <section class="core-section light">
+
+        <div class="container">
+
+            <div class="core-header">
+
+                <h2>
+                    Preguntas frecuentes
+                </h2>
+
+            </div>
+
+
+            <div class="core-faq">
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿Necesito internet para utilizar CORE?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        No. CORE está diseñado bajo una filosofía
+                        <strong>local-first</strong>, por lo que las
+                        actividades principales pueden realizarse sin
+                        conexión a internet.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿En qué sistemas operativos funciona?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        Actualmente existen versiones para
+                        <strong>Windows x64</strong>,
+                        <strong>macOS Apple Silicon (M1, M2, M3, M4)</strong> y
+                        <strong>macOS Intel</strong>.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿Puedo comenzar utilizando el plan Free?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        Sí. El plan Free permite comenzar con hasta
+                        3 grupos y 40 alumnos. Puedes pasar posteriormente
+                        a un plan superior cuando necesites más capacidad
+                        o funciones.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿Cómo compro una licencia?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        Escríbenos por WhatsApp indicando el plan que deseas.
+                        Te proporcionaremos los datos de transferencia,
+                        confirmaremos el pago y posteriormente recibirás
+                        la información necesaria para activar tu licencia.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿El programa seguirá recibiendo actualizaciones?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        Sí. CORE es un proyecto en evolución.
+                        El objetivo es continuar incorporando funciones,
+                        mejorar la experiencia y desarrollar herramientas
+                        que respondan a las necesidades reales de los docentes.
+
+                    </div>
+
+                </div>
+
+
+                <div class="core-faq-item">
+
+                    <button class="core-faq-question">
+                        ¿Puedo utilizar CORE en diferentes computadoras?
+                        <span>＋</span>
+                    </button>
+
+                    <div class="core-faq-answer">
+
+                        La utilización de una licencia en diferentes equipos
+                        dependerá de las condiciones del plan y de la licencia
+                        adquirida. Para conocer las opciones disponibles,
+                        contáctanos por WhatsApp.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         CTA FINAL
+    ========================================================== -->
+
+    <section class="core-section purchase">
+
+        <div class="container">
+
+            <div class="purchase-box">
+
+                <div class="core-badge"
+                     style="background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.15);">
+                    JOKARHE CORE
+                </div>
+
+                <h2>
+                    Menos tiempo administrando.
+                    <br>
+                    Más tiempo enseñando.
+                </h2>
+
+                <p>
+                    Descarga CORE, conoce sus funciones y comienza
+                    a transformar tu trabajo docente.
+                </p>
+
+                <div class="hero-buttons"
+                     style="justify-content:center;">
+
+                    <a href="#descargas"
+                       class="btn btn-download">
+                        Descargar CORE
+                    </a>
+
+                    <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20quiero%20conocer%20JOKARHE%20CORE."
+                       target="_blank"
+                       rel="noopener"
+                       class="btn whatsapp-btn">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+
     <footer class="footer">
+
         <div class="container">
+
             <div class="footer-grid">
+
                 <div>
+
                     <div class="footer-logo">
-                        <img src="Documentos/Logo/Logo_empressa.png" alt="Jokarhe Systems Logo"
-                            style="max-height: 48px; width: auto; margin-bottom: 10px; border-radius: 4px;">
-                        <br>JOKARHE SYSTEMS
+
+                        <img src="Documentos/Logo/Logo_empressa.png"
+                            alt="Jokarhe Systems"
+                            style="max-height:48px;width:auto;margin-bottom:10px;border-radius:4px;">
+
+                        <br>
+                        JOKARHE SYSTEMS
+
                     </div>
-                    <p class="footer-desc">Transformamos personas, instituciones y empresas mediante sistemas
-                        inteligentes.</p>
-                    <div style="display: flex; gap: 15px; margin-top: 20px;">
-                        <a href="#" style="color: var(--text-secondary);"><svg width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg></a>
-                        <a href="#" style="color: var(--text-secondary);"><svg width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path
-                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                </path>
-                            </svg></a>
-                        <a href="#" style="color: var(--text-secondary);"><svg width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg></a>
-                    </div>
+
+                    <p class="footer-desc">
+
+                        Tecnología educativa desarrollada
+                        por docentes para docentes.
+
+                    </p>
+
                 </div>
+
+
                 <div>
-                    <h4 class="footer-title">Enlaces</h4>
+
+                    <h4 class="footer-title">
+                        JOKARHE CORE
+                    </h4>
+
                     <ul class="footer-links">
-                        <li><a href="#home">Inicio</a></li>
-                        <li><a href="#services">Servicios</a></li>
-                        <li><a href="#product">Productos</a></li>
-                        <li><a href="dosifica/index.html">Acceso Clientes</a></li>
+
+                        <li>
+                            <a href="#core">
+                                Conoce CORE
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#modulos">
+                                Módulos
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#planes">
+                                Planes
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#descargas">
+                                Descargar
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#instalacion">
+                                Instalación
+                            </a>
+                        </li>
+
                     </ul>
+
                 </div>
+
+
                 <div>
-                    <h4 class="footer-title">Legal</h4>
+
+                    <h4 class="footer-title">
+                        Soporte
+                    </h4>
+
                     <ul class="footer-links">
-                        <li><a href="#">Aviso de Privacidad</a></li>
-                        <li><a href="#">Términos de Servicio</a></li>
-                        <li><a href="#">Políticas de Soporte</a></li>
+
+                        <li>
+                            <a href="#comprar">
+                                Comprar licencia
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://wa.me/525654017036"
+                               target="_blank"
+                               rel="noopener">
+                                WhatsApp
+                            </a>
+                        </li>
+
                     </ul>
+
                 </div>
+
             </div>
+
+
             <div class="footer-bottom">
-                <p>&copy; 2026 Jokarhe Systems. Todos los derechos reservados a la empresa.</p>
+
+                <p>
+                    &copy; 2026 Jokarhe Systems.
+                    Todos los derechos reservados.
+                </p>
+
             </div>
+
         </div>
+
     </footer>
 
-    <!-- Botones Flotantes -->
-    <a href="https://wa.me/525654017036" target="_blank" class="fab-whatsapp" aria-label="Chat por WhatsApp">
+
+    <!-- =========================================================
+         WHATSAPP FLOATING BUTTON
+    ========================================================== -->
+
+    <a href="https://wa.me/525654017036?text=Hola%20Jokarhe%20Systems,%20quiero%20informaci%C3%B3n%20sobre%20JOKARHE%20CORE."
+       target="_blank"
+       rel="noopener"
+       class="fab-whatsapp"
+       aria-label="Contactar por WhatsApp">
+
         <svg viewBox="0 0 24 24">
+
             <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.05-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+
         </svg>
+
     </a>
 
-    <button class="fab-up" aria-label="Subir">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
+
+    <button class="fab-up"
+            aria-label="Subir">
+
+        <svg width="24"
+             height="24"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
             <polyline points="18 15 12 9 6 15"></polyline>
+
         </svg>
+
     </button>
 
-    <!-- Scripts -->
+
+    <!-- =========================================================
+         SCRIPTS
+    ========================================================== -->
+
     <script src="script.js"></script>
+
+    <script>
+
+        /* FAQ */
+
+        document.querySelectorAll('.core-faq-question').forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                const item = button.parentElement;
+
+                document.querySelectorAll('.core-faq-item')
+                    .forEach(other => {
+
+                        if (other !== item) {
+                            other.classList.remove('active');
+                        }
+
+                    });
+
+                item.classList.toggle('active');
+
+            });
+
+        });
+
+
+        /* Scroll suave */
+
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+            link.addEventListener('click', function(e) {
+
+                const target = document.querySelector(this.getAttribute('href'));
+
+                if (target) {
+
+                    e.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                }
+
+            });
+
+        });
+
+    </script>
+
 </body>
 
 </html>

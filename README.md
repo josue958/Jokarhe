@@ -1,32 +1,35 @@
-# Planeador de Ciclos Escolares y PDAs - JOKARHE CORE
+# JOKARHE CORE - Landing Page Oficial
 
-Este es un sistema web autónomo desarrollado en PHP y SQLite que permite almacenar información académica, calcular la programación de las sesiones escolares de una asignatura a lo largo del año, dividir el ciclo escolar en 3 periodos y distribuir de manera equitativa los Procesos de Desarrollo de Aprendizaje (PDA) mostrando sus fechas exactas de cobertura.
+Sitio web oficial y portal de descargas de **JOKARHE CORE**, un sistema integral de gestión educativa desarrollado por docentes para docentes.
 
-## Características
+## Estructura del Proyecto
 
-- **Gestión de Ciclos Escolares:** Configura la fecha de inicio del ciclo escolar, la cantidad de días hábiles totales (ej. 190 días) y la división en los 3 periodos.
-- **Calendario Excluyente:** Permite registrar días festivos (días inhábiles) de forma manual o cargando automáticamente los días inhábiles oficiales de México para excluirlos de la programación de sesiones.
-- **Gestión de Horarios Semanales:** Indica cuántas horas semanales se imparte una materia (de 1 a 8 horas) y distribuye estas horas en los días de la semana (Lunes a Viernes).
-- **Cálculo Automático de Sesiones:** El sistema calcula el número exacto de sesiones que tendrá la asignatura a lo largo de los días de clases hábiles del ciclo.
-- **Distribución Equitativa de PDAs:** Con base en el número total de PDAs de la asignatura, el sistema distribuye las sesiones equitativamente, indicando qué fecha de inicio, qué fecha de fin y en qué periodo académico se desarrollará cada PDA.
-- **Personalización de Temas:** Permite redactar y guardar temas personalizados para cada PDA directamente en la base de datos SQLite.
-- **Diseño Premium:** Interfaz oscura, limpia, y modular (AULA UX) con bordes redondeados y sidebar colapsable compatible con macOS.
-
-## Requisitos
-
-- **PHP 8.0** o superior con la extensión `pdo_sqlite` habilitada.
-- **SQLite 3**.
-
-## Ejecución Local
-
-Para correr el proyecto localmente, abre una terminal en el directorio del proyecto y ejecuta el servidor de desarrollo integrado de PHP:
-
-```bash
-php -S localhost:8000
+```text
+Jokarhe/
+├── index.html                           # Landing page principal
+├── styles.css                           # Hoja de estilos global y utilidades
+├── script.js                            # Interactividad (menú móvil, acordeón FAQ, etc.)
+└── Documentos/
+    └── Logo/                            # Recursos de marca e identidad visual
+        ├── Identidad Visual.png
+        └── Logo_empressa.png
 ```
 
-Luego, abre tu navegador y entra en la siguiente dirección:
+## Descargas y Distribución
 
-```
-http://localhost:8000
-```
+Los instaladores oficiales se distribuyen a través de la carpeta compartida en **Google Drive**:
+- **Enlace de Descargas:** [Carpeta Oficial JOKARHE CORE en Google Drive](https://drive.google.com/drive/folders/1EWxd3eNhXXIpIcVLbTSITU0IMKLwCm1d?usp=sharing)
+- **Versiones disponibles:**
+  - `Windows` (x64, Win 10 / 11)
+  - `macOS Apple Silicon` (M1, M2, M3, M4)
+  - `macOS Intel` (x64)
+
+## Características de JOKARHE CORE
+
+- **Local-first / Offline:** Funciona completamente sin conexión a internet; la información permanece segura en el equipo local.
+- **Gestión Integral:** Alumnos, Grupos, Asistencia, Evaluación, Seguimiento PDA (NEM), Equipos colaborativos, Conducta e Incidentes.
+- **Multiplataforma:** Disponible para Windows 10/11 y macOS (Apple Silicon e Intel).
+
+## Publicación
+
+El proyecto está estructurado para servirse directamente en **GitHub Pages** u hospedaje web estático.
